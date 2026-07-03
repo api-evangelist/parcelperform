@@ -1,0 +1,221 @@
+{
+  "info": {
+    "name": "Parcel Perform API",
+    "description": "Create and retrieve shipments and tracking events, manage returns, and configure outgoing webhooks with Parcel Perform. Base URL: https://api.parcelperform.com/v5. Authenticate first with the Authentication folder to obtain a Bearer token (valid ~3600 seconds), then set it as the bearerToken collection variable. Most operations here follow Parcel Perform's documented v5 API naming; several paths are modeled where the public Stoplight-hosted reference could not be fully extracted (see review.yml in the repo for what is confirmed vs modeled).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{bearerToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.parcelperform.com/v5", "type": "string" },
+    { "key": "authUrl", "value": "https://api.parcelperform.com/auth/oauth/token/", "type": "string" },
+    { "key": "bearerToken", "value": "", "type": "string" },
+    { "key": "clientBasicAuth", "value": "", "type": "string", "description": "base64(client_id:client_secret)" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Generate a Bearer access token",
+          "request": {
+            "method": "POST",
+            "auth": { "type": "noauth" },
+            "header": [
+              { "key": "Authorization", "value": "Basic {{clientBasicAuth}}" },
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": { "mode": "urlencoded", "urlencoded": [ { "key": "grant_type", "value": "client_credentials" } ] },
+            "url": { "raw": "{{authUrl}}", "host": ["{{authUrl}}"] },
+            "description": "Exchanges API credentials for an OAuth2 Bearer access token via the client-credentials grant. Token reported valid for 3600 seconds."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shipments",
+      "item": [
+        {
+          "name": "Create a shipment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"tracking_number\": \"1Z999AA10123456784\",\n  \"courier\": \"ups\",\n  \"reference_number\": \"ORDER-1001\",\n  \"recipient\": {\n    \"name\": \"Jane Doe\",\n    \"country\": \"US\"\n  }\n}" },
+            "url": { "raw": "{{baseUrl}}/shipment", "host": ["{{baseUrl}}"], "path": ["shipment"] },
+            "description": "Creates a shipment in the Parcel Perform account so it can be tracked across the carrier network."
+          }
+        },
+        {
+          "name": "List shipments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/shipment/list?page=1&page_size=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["shipment", "list"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "page_size", "value": "50" }
+              ]
+            },
+            "description": "Retrieves a list of shipments using search criteria such as tracking number, courier, or created date range."
+          }
+        },
+        {
+          "name": "Retrieve shipment details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/shipment/details/:tracking_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["shipment", "details", ":tracking_id"],
+              "variable": [{ "key": "tracking_id", "value": "" }]
+            },
+            "description": "Retrieves the user-input details plus the normalized tracking events for a single shipment."
+          }
+        },
+        {
+          "name": "Update shipment",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"reference_number\": \"ORDER-1001-B\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/shipment/details/:tracking_id",
+              "host": ["{{baseUrl}}"],
+              "path": ["shipment", "details", ":tracking_id"],
+              "variable": [{ "key": "tracking_id", "value": "" }]
+            },
+            "description": "Updates certain fields, or adds additional elements, for an existing outbound or return shipment."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tracking Events",
+      "item": [
+        {
+          "name": "Create events for a shipment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"events\": [\n    {\n      \"status\": \"out_for_delivery\",\n      \"occurred_at\": \"2026-07-03T09:00:00Z\",\n      \"location\": { \"city\": \"Singapore\", \"country\": \"SG\" }\n    }\n  ]\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/shipment/:tracking_id/event",
+              "host": ["{{baseUrl}}"],
+              "path": ["shipment", ":tracking_id", "event"],
+              "variable": [{ "key": "tracking_id", "value": "" }]
+            },
+            "description": "Manually creates one or more tracking events on an existing outbound or return shipment."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Returns",
+      "item": [
+        {
+          "name": "Create a return",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"shipment_tracking_number\": \"1Z999AA10123456784\",\n  \"reason\": \"wrong_size\"\n}" },
+            "url": { "raw": "{{baseUrl}}/return", "host": ["{{baseUrl}}"], "path": ["return"] },
+            "description": "Creates a return against an existing outbound shipment. One return per request."
+          }
+        },
+        {
+          "name": "Create a return with its return shipment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"shipment_tracking_number\": \"1Z999AA10123456784\",\n  \"reason\": \"wrong_size\",\n  \"shipment\": {\n    \"tracking_number\": \"RETURN-1Z999AA10123456784\",\n    \"courier\": \"ups\"\n  }\n}" },
+            "url": { "raw": "{{baseUrl}}/return/shipment", "host": ["{{baseUrl}}"], "path": ["return", "shipment"] },
+            "description": "Creates a Return and its associated Return Shipment together in a single request."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Webhooks",
+      "item": [
+        {
+          "name": "List webhook subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/webhook", "host": ["{{baseUrl}}"], "path": ["webhook"] },
+            "description": "Lists the callback URLs registered to receive outgoing Shipment Tracking Update webhooks."
+          }
+        },
+        {
+          "name": "Create a webhook subscription",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"target_url\": \"https://example.com/webhooks/parcelperform\",\n  \"format_version\": \"5.2.0\"\n}" },
+            "url": { "raw": "{{baseUrl}}/webhook", "host": ["{{baseUrl}}"], "path": ["webhook"] },
+            "description": "Registers a callback URL and payload format version to receive outgoing Shipment Tracking Update events."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Couriers",
+      "item": [
+        {
+          "name": "List supported couriers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/courier", "host": ["{{baseUrl}}"], "path": ["courier"] },
+            "description": "Modeled endpoint - not confirmed in Parcel Perform's public API reference. See review.yml."
+          }
+        },
+        {
+          "name": "Retrieve a courier",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courier/:courier_code",
+              "host": ["{{baseUrl}}"],
+              "path": ["courier", ":courier_code"],
+              "variable": [{ "key": "courier_code", "value": "ups" }]
+            },
+            "description": "Modeled endpoint - not confirmed in Parcel Perform's public API reference. See review.yml."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Retrieve performance analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics/performance?date_from=2026-06-01&date_to=2026-06-30&group_by=courier",
+              "host": ["{{baseUrl}}"],
+              "path": ["analytics", "performance"],
+              "query": [
+                { "key": "date_from", "value": "2026-06-01" },
+                { "key": "date_to", "value": "2026-06-30" },
+                { "key": "group_by", "value": "courier" }
+              ]
+            },
+            "description": "Modeled endpoint behind the Analyze product - not confirmed in Parcel Perform's public API reference. See review.yml."
+          }
+        }
+      ]
+    }
+  ]
+}

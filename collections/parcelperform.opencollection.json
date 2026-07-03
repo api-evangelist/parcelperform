@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Parcel Perform API",
+    "version": "5.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Generate a Bearer access token.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/auth/oauth/token/",
+            "headers": [
+              { "key": "Authorization", "value": "Basic {{clientBasicAuth}}" },
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": { "type": "urlencoded", "data": "grant_type=client_credentials" }
+          },
+          "docs": "Exchanges API credentials for an OAuth2 Bearer access token via the client-credentials grant. Token reported valid for 3600 seconds."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Shipments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Create a shipment.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/shipment",
+            "body": { "type": "json", "data": "{\n  \"tracking_number\": \"1Z999AA10123456784\",\n  \"courier\": \"ups\"\n}" }
+          },
+          "docs": "Creates a shipment in the Parcel Perform account so it can be tracked across the carrier network."
+        },
+        {
+          "info": { "name": "List shipments.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/shipment/list",
+            "params": [
+              { "name": "page", "value": "1", "type": "query", "description": "Page number." },
+              { "name": "page_size", "value": "50", "type": "query", "description": "Results per page." }
+            ]
+          },
+          "docs": "Retrieves a list of shipments using search criteria such as tracking number, courier, or created date range."
+        },
+        {
+          "info": { "name": "Retrieve shipment details.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/shipment/details/:tracking_id",
+            "params": [
+              { "name": "tracking_id", "value": "", "type": "path", "description": "Tracking ID or tracking number for the shipment." }
+            ]
+          },
+          "docs": "Retrieves the user-input details plus the normalized tracking events for a single shipment."
+        },
+        {
+          "info": { "name": "Update shipment.", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.parcelperform.com/v5/shipment/details/:tracking_id",
+            "params": [
+              { "name": "tracking_id", "value": "", "type": "path", "description": "Tracking ID or tracking number for the shipment." }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Updates certain fields, or adds additional elements, for an existing outbound or return shipment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tracking Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Create events for a shipment.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/shipment/:tracking_id/event",
+            "params": [
+              { "name": "tracking_id", "value": "", "type": "path", "description": "Tracking ID or tracking number for the shipment." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"events\": [\n    { \"status\": \"out_for_delivery\", \"occurred_at\": \"2026-07-03T09:00:00Z\" }\n  ]\n}" }
+          },
+          "docs": "Manually creates one or more tracking events on an existing outbound or return shipment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Returns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Create a return.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/return",
+            "body": { "type": "json", "data": "{\n  \"shipment_tracking_number\": \"1Z999AA10123456784\",\n  \"reason\": \"wrong_size\"\n}" }
+          },
+          "docs": "Creates a return against an existing outbound shipment. One return per request."
+        },
+        {
+          "info": { "name": "Create a return with its return shipment.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/return/shipment",
+            "body": { "type": "json", "data": "{\n  \"shipment_tracking_number\": \"1Z999AA10123456784\",\n  \"reason\": \"wrong_size\",\n  \"shipment\": { \"tracking_number\": \"RETURN-1Z999AA10123456784\", \"courier\": \"ups\" }\n}" }
+          },
+          "docs": "Creates a Return and its associated Return Shipment together in a single request."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "List webhook subscriptions.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.parcelperform.com/v5/webhook" },
+          "docs": "Lists the callback URLs registered to receive outgoing Shipment Tracking Update webhooks."
+        },
+        {
+          "info": { "name": "Create a webhook subscription.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/webhook",
+            "body": { "type": "json", "data": "{\n  \"target_url\": \"https://example.com/webhooks/parcelperform\",\n  \"format_version\": \"5.2.0\"\n}" }
+          },
+          "docs": "Registers a callback URL and payload format version to receive outgoing Shipment Tracking Update events."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Couriers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "List supported couriers.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.parcelperform.com/v5/courier" },
+          "docs": "Modeled endpoint - not confirmed in Parcel Perform's public API reference. See review.yml."
+        },
+        {
+          "info": { "name": "Retrieve a courier.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/courier/:courier_code",
+            "params": [
+              { "name": "courier_code", "value": "ups", "type": "path", "description": "Carrier/courier code." }
+            ]
+          },
+          "docs": "Modeled endpoint - not confirmed in Parcel Perform's public API reference. See review.yml."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Retrieve performance analytics.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/analytics/performance?date_from=2026-06-01&date_to=2026-06-30&group_by=courier",
+            "params": [
+              { "name": "date_from", "value": "2026-06-01", "type": "query" },
+              { "name": "date_to", "value": "2026-06-30", "type": "query" },
+              { "name": "group_by", "value": "courier", "type": "query" }
+            ]
+          },
+          "docs": "Modeled endpoint behind the Analyze product - not confirmed in Parcel Perform's public API reference. See review.yml."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

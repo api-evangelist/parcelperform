@@ -1,0 +1,164 @@
+aid: parcelperform
+name: Parcel Perform
+review:
+  question: Does Parcel Perform expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-03'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Parcel Perform's own public API surface
+    (shipments, tracking events, returns) is request/response REST over HTTPS;
+    the only server-initiated transport documented is outgoing webhooks, which
+    are server-to-endpoint HTTP POST callbacks, not a streaming protocol.
+    There is no Server-Sent Events (SSE) surface documented on Parcel
+    Perform's own API either, so under the current AsyncAPI scope (SSE and
+    WebSocket in scope, plain webhook POSTs out of scope) there is nothing on
+    Parcel Perform's own API to model in AsyncAPI.
+findings:
+  summary: |
+    Parcel Perform does not publish a documented public WebSocket API.
+    Parcel Perform is a tracking-aggregation and delivery-experience platform
+    that ingests carrier tracking feeds, normalizes them into a single event
+    model, and exposes them through a REST API (base
+    https://api.parcelperform.com, currently at v5/v5.2.0) authenticated with
+    an OAuth2 client-credentials Bearer token obtained from
+    https://api.parcelperform.com/auth/oauth/token/. Consumers create and
+    retrieve shipments, retrieve/create tracking events, and create returns
+    over plain HTTPS request/response calls. Real-time delivery of tracking
+    updates to consumers is handled via Outgoing Webhooks (documented in both
+    a v5.0.0 and a v5.2.0 payload format) - the platform pushes an HTTP POST
+    to a merchant-registered callback URL when a new tracking event is
+    ingested. No realtime, bidirectional, or streaming WebSocket (ws:// or
+    wss://) endpoint, and no Server-Sent Events (SSE) stream, is documented
+    anywhere in Parcel Perform's public API Guides & Reference as of the
+    review date.
+  accessNote: |
+    Parcel Perform's developer portal (developer.parcelperform.com, hosted on
+    Stoplight at developers.parcelperform.com) renders its reference pages
+    client-side via JavaScript. Programmatic fetching returned only page
+    titles/navigation chrome rather than full body content, so this review
+    relied on documentation page titles, indexed search-result snippets, and
+    third-party integration guides (e.g. Solvemate's Postman walkthrough) to
+    confirm which operations exist and how authentication works, rather than
+    reading literal request/response schemas off the rendered page. This is
+    reflected in the OpenAPI document, which marks most paths and all schemas
+    as modeled rather than confirmed.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.parcelperform.com/v5
+      documented: true
+      note: Shipments, tracking events, and returns are managed via request/response REST.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Outgoing Shipment Tracking Update webhooks POST to a merchant-registered HTTPS callback URL, in v5.0.0 or v5.2.0 payload format. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events stream is documented on Parcel Perform's own API.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in Parcel Perform's API Guides & Reference as of the review date.
+  endpointsConfirmed:
+    - description: Base API domain confirmed verbatim via indexed documentation and third-party integration guides.
+      value: https://api.parcelperform.com
+    - description: OAuth2 client-credentials token endpoint, path confirmed verbatim.
+      value: POST https://api.parcelperform.com/auth/oauth/token/
+    - description: Shipment details path fragment confirmed verbatim (trailing identifier segment modeled).
+      value: GET https://api.parcelperform.com/v5/shipment/details/...
+    - description: Documented operation (title confirmed); exact path/schema modeled in openapi/parcelperform-openapi.yml.
+      value: Create a Shipment (POST)
+    - description: Documented operation (title confirmed); exact path/schema modeled.
+      value: List Shipments (v5.0)
+    - description: Documented operation (title confirmed); exact path/schema modeled.
+      value: Update Shipment (v5.0) / Update Details for an Existing Shipment
+    - description: Documented operation (title confirmed); exact path/schema modeled.
+      value: Create Events for an Existing Shipment / Create Events (v5.0)
+    - description: Documented operation (title confirmed); exact path/schema modeled.
+      value: Create a Return / Create Return
+    - description: Documented payload formats (titles confirmed); subscription-management path modeled.
+      value: Outgoing Webhooks (Version 5.0.0 Format) and (Version 5.2.0 Format)
+  endpointsModeled:
+    - POST https://api.parcelperform.com/v5/shipment
+    - GET  https://api.parcelperform.com/v5/shipment/list
+    - PUT  https://api.parcelperform.com/v5/shipment/details/{tracking_id}
+    - POST https://api.parcelperform.com/v5/shipment/{tracking_id}/event
+    - POST https://api.parcelperform.com/v5/return
+    - POST https://api.parcelperform.com/v5/return/shipment
+    - GET  https://api.parcelperform.com/v5/webhook
+    - POST https://api.parcelperform.com/v5/webhook
+    - GET  https://api.parcelperform.com/v5/courier
+    - GET  https://api.parcelperform.com/v5/courier/{courier_code}
+    - GET  https://api.parcelperform.com/v5/analytics/performance
+sources:
+  - url: https://developer.parcelperform.com/
+    type: Documentation
+    note: Developer portal entry point; redirects to the Stoplight-hosted reference at developers.parcelperform.com.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/8e768e6831f6c-overview
+    type: Documentation
+    note: API Guides & Reference overview page (title confirmed; body not extractable due to client-side rendering).
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/768e98a8ab866-authentication
+    type: Documentation
+    note: Confirms OAuth2 Bearer token authentication model.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/8ty67b844563h-generate-bearer-access-token
+    type: APIReference
+    note: Token generation endpoint; exact path and 3600s lifetime confirmed via indexed third-party guide.
+  - url: https://solvemate.elevio.help/en/articles/200-how-to-get-an-access-token-via-client-credentials-in-postman-e-g-for-parcelperform
+    type: Documentation
+    note: Third-party walkthrough confirming the auth/oauth/token/ path, Basic-auth header, grant_type=client_credentials body, and 3600s token lifetime.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/5unzr17vbxlxd-list-shipments
+    type: APIReference
+    note: List Shipments (v5.0) operation.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/6f5f7fedef593-create-a-shipment
+    type: APIReference
+    note: Create a Shipment (POST) operation.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/5dd8f383960eb-retrieve-details-of-a-single-shipment
+    type: APIReference
+    note: Retrieve Shipment Details (v5.0.0).
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/89549f3fb3814-retrieve-details-of-a-single-shipment-version-5-2-0
+    type: APIReference
+    note: Retrieve Shipment Details (v5.2.0) - adds returns, rating, line_items, collection_point, event.location objects per the documented version diff.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/strho6t5rygmr-update-shipment
+    type: APIReference
+    note: Update Shipment (v5.0) operation.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/ee4c914fc83bf-create-events-for-an-existing-shipment
+    type: APIReference
+    note: Create Events for an Existing Shipment operation.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/3d66ap56pfly7-create-return
+    type: APIReference
+    note: Create Return operation.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/1bd1a948e1eb3-create-a-return
+    type: APIReference
+    note: Create a Return (with associated Return Shipment) operation; one return per request.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/e8adbc8a2da19-outgoing-webhooks-version-5-format
+    type: APIReference
+    note: Outgoing Webhooks, v5.0.0 payload format - HTTP POST callback, not WebSocket.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/ba66787fe87e7-outgoing-webhooks-version-5-2-0-format
+    type: APIReference
+    note: Outgoing Webhooks, v5.2.0 payload format.
+  - url: https://developers.parcelperform.com/docs/api-guides-reference/ab70ecf96a9e8-response-structure-statuses-and-errors
+    type: Documentation
+    note: Documented response structure, statuses, and error conventions page.
+  - url: https://www.parcelperform.com/integrations/carriers
+    type: Documentation
+    note: Marketing directory of supported carriers; no corresponding public API reference page found for a carrier-list endpoint.
+  - url: https://www.parcelperform.com/products/analyze
+    type: Documentation
+    note: Analyze product page (AI Decision Intelligence / performance analytics); no corresponding public API reference page found.
+  - url: https://www.parcelperform.com/insights/tracking-api
+    type: Documentation
+    note: Marketing overview of the Tracking API's carrier-aggregation value proposition.
+  - url: https://github.com/ParcelPerform
+    type: SourceCode
+    note: Official Parcel Perform GitHub organization (Parcel Perform Tech Hub Co., Ltd, linked from parcelperform.com); minimal public activity, one forked repo.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or SSE protocol surface exists on Parcel Perform's own API.
+    Real-time delivery to consumers is handled by outgoing webhook POST
+    callbacks, which are out of scope for an AsyncAPI document under current
+    scope rules. No AsyncAPI document was created.

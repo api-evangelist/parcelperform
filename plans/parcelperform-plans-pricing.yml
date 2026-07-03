@@ -1,0 +1,61 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Parcel Perform
+providerId: parcelperform
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Logistics
+- Shipment Tracking
+- Post-Purchase
+- Plans
+description: >-
+  Parcel Perform does not publish self-serve pricing. The platform is sold as
+  an enterprise SaaS subscription, scoped by parcel/shipment volume, number of
+  carrier integrations, and which product modules are included (tracking
+  pages, notifications, returns, analytics). Prospective customers submit
+  their business details through the Parcel Perform contact form and a
+  product expert prepares a custom quote; API access (Bearer token
+  credentials) is provisioned as part of an active commercial contract, not
+  purchased directly against the API.
+notes: >-
+  No public price list, self-serve signup, or free tier was found. Verify
+  current packaging and volume tiers directly with Parcel Perform sales during
+  reconciliation.
+sources:
+- https://www.parcelperform.com/
+- https://resources.parcelperform.com/contact
+- https://developer.parcelperform.com/
+- https://www.g2.com/products/parcel-perform/pricing
+plans:
+- id: parcelperform-enterprise
+  name: Enterprise (Custom Quote)
+  type: enterprise
+  description: >-
+    The only publicly known commercial model. Contract terms, parcel-volume
+    allowances, included carrier integrations, and module access (tracking,
+    notifications, returns, analytics) are negotiated per customer based on
+    submitted business details.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Shipment Tracking Across the Carrier Network
+  - name: Post-Purchase Tracking Pages
+  - name: Proactive Notifications
+  - name: Returns Management
+  - name: Analytics and Insights
+  - name: API and Webhook Access
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

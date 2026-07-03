@@ -1,0 +1,95 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Parcel Perform
+providerId: parcelperform
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Logistics
+- Shipment Tracking
+- Post-Purchase
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Parcel Perform spend. Parcel Perform is sold as an enterprise
+  SaaS contract rather than metered self-serve usage, so the dominant cost
+  lever is the negotiated annual agreement (scoped by parcel volume, carrier
+  integrations, and product modules) rather than a per-call API price. Within
+  that contract, the operational cost drivers that show up in shipment volume
+  are the number of shipments/returns created and tracked, and the number of
+  outgoing webhook subscriptions/events consumed.
+notes: >-
+  No public per-unit rates are available to reconcile against FOCUS columns;
+  actual invoiced amounts and any usage-based true-ups should be obtained from
+  the Parcel Perform commercial agreement.
+sources:
+- https://www.parcelperform.com/
+- https://resources.parcelperform.com/contact
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Parcel Perform
+serviceCategory: Logistics and Delivery Experience
+billingModel:
+  pricingCategory: Contract (Enterprise)
+  billingFrequency: Annual
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Parcel Perform
+  ServiceCategory: Logistics and Delivery Experience
+  ProviderName: Parcel Perform
+  PublisherName: Parcel Perform
+  InvoiceIssuerName: Parcel Perform
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Contract (Enterprise)
+meters:
+- name: shipments_tracked
+  description: Outbound and return shipments created/tracked through the platform, the primary volume driver behind enterprise contract tiers.
+  unit: shipments
+  aggregation: sum
+  dimensions:
+  - account
+  - courier
+- name: returns_processed
+  description: Returns created through the Returns API or portal.
+  unit: returns
+  aggregation: sum
+  dimensions:
+  - account
+- name: webhook_events_delivered
+  description: Outgoing Shipment Tracking Update webhook events delivered to subscribed endpoints.
+  unit: events
+  aggregation: sum
+  dimensions:
+  - account
+  - subscription
+- name: carrier_integrations
+  description: Number of distinct carrier/courier integrations active on the account, a common contract-tier input.
+  unit: carriers
+  aggregation: count
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track monthly shipment, return, and webhook-event volume against the contracted allowance to anticipate renewal-time tier changes.
+- name: Allocation
+  description: Tag shipments with merchant/brand or business-unit reference numbers so tracking volume maps to internal cost centers.
+- name: Optimization
+  description: Consolidate webhook subscriptions and filter unneeded carrier integrations to avoid paying for coverage that isn't used.
+- name: Accountability
+  description: Assign an owner for the Parcel Perform commercial relationship and review usage against contract terms at renewal.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

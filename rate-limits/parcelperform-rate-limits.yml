@@ -1,0 +1,57 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Parcel Perform
+providerId: parcelperform
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Logistics
+- Shipment Tracking
+- Rate Limiting
+- Quotas
+description: >-
+  Parcel Perform does not publish fixed numeric rate limits for the public API
+  Guides & Reference. Access is gated behind an OAuth2 client-credentials
+  Bearer token issued per contracted account, and the underlying commercial
+  agreement (rather than a documented per-minute/per-day request cap)
+  determines how much shipment, event, return, and webhook traffic an account
+  can generate. The Bearer access token itself is reported to expire after
+  3600 seconds (60 minutes) and must be refreshed via the token endpoint.
+notes: >-
+  No numeric per-account or per-endpoint request-rate limit is documented
+  publicly as of the review date. Verify actual throughput ceilings and
+  webhook retry/backoff behavior directly with Parcel Perform during
+  onboarding.
+sources:
+- https://developer.parcelperform.com/
+- https://developers.parcelperform.com/docs/api-guides-reference/768e98a8ab866-authentication
+- https://developers.parcelperform.com/docs/api-guides-reference/8ty67b844563h-generate-bearer-access-token
+- https://developers.parcelperform.com/docs/api-guides-reference/ab70ecf96a9e8-response-structure-statuses-and-errors
+responseCodes:
+  throttled: 429
+limits:
+- name: API Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented in the public API Guides & Reference.
+- name: Bearer Access Token Lifetime
+  scope: token
+  metric: seconds
+  limit: 3600
+  notes: Reported token lifetime (60 minutes) before a new token must be requested via client-credentials grant.
+- name: Outgoing Webhook Delivery
+  scope: subscription
+  metric: events
+  limit: not published
+  notes: No documented delivery-rate cap or retry/backoff schedule found for outgoing Shipment Tracking Update webhooks.
+policies:
+- name: OAuth2 Token Refresh
+  description: Clients must re-authenticate via the client-credentials grant once the Bearer access token expires (reported 3600 seconds) rather than relying on a refresh token.
+- name: Backoff Strategy
+  description: As with most REST APIs, clients should implement exponential backoff with jitter and honor 429/5xx responses, even though Parcel Perform has not published explicit numeric thresholds.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

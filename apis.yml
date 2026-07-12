@@ -151,6 +151,12 @@ apis:
     API Guides & Reference, so the endpoints below are modeled on the metrics the
     product describes rather than confirmed against a published reference.
 common:
+- type: VulnerabilityDisclosure
+  url: security/parcelperform-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/parcelperform-domain-security.yml
+- type: Authentication
+  url: authentication/parcelperform-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/ParcelPerform
 - type: LinkedIn

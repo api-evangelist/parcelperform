@@ -151,6 +151,8 @@ apis:
     API Guides & Reference, so the endpoints below are modeled on the metrics the
     product describes rather than confirmed against a published reference.
 common:
+- type: AgenticAccess
+  url: agentic-access/parcelperform-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/parcelperform-vulnerability-disclosure.yml
 - type: DomainSecurity

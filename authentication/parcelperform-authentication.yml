@@ -9,6 +9,6 @@ schemes:
   type: http
   scheme: bearer
   description: 'Bearer access token obtained from POST /auth/oauth/token/, valid for 3600 seconds
-    (60 minutes) per indexed integration guides. Passed as `Authorization: Bearer YOUR_ACCESS_TOKEN`.'
+    (60 minutes) per indexed integration guides. Passed as `Authorization: Bearer [example key]`.'
   sources:
   - openapi/parcelperform-openapi.yml

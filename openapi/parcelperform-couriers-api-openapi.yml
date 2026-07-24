@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  title: Parcel Perform Analytics Couriers API
+  description: 'Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.
+
+
+    Endpoint groups marked CONFIRMED were verified against Parcel Perform''s public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform''s public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company''s marketing/product pages.'
+  version: 5.2.0
+  contact:
+    name: Parcel Perform
+    url: https://www.parcelperform.com
+  termsOfService: https://www.parcelperform.com/terms-of-service
+servers:
+- url: https://api.parcelperform.com/v5
+  description: Parcel Perform production API (v5)
+security:
+- bearerAuth: []
+tags:
+- name: Couriers
+  description: Carrier/courier reference data. Entirely MODELED - no public reference page found.
+paths:
+  /courier:
+    get:
+      operationId: listCouriers
+      tags:
+      - Couriers
+      summary: List supported couriers/carriers (MODELED - not found in public reference)
+      description: Illustrative list of the courier/carrier network Parcel Perform tracks against (reported between roughly 900 and 1,000+ carriers worldwide per Parcel Perform's marketing pages). No standalone `/courier` endpoint is documented in the public API Guides & Reference as of this review; carrier codes otherwise only appear as a field on Shipment resources. Entirely modeled.
+      responses:
+        '200':
+          description: Supported couriers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Courier'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /courier/{courier_code}:
+    parameters:
+    - name: courier_code
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getCourier
+      tags:
+      - Couriers
+      summary: Retrieve a courier/carrier (MODELED - not found in public reference)
+      description: Entirely modeled - see summary on the list operation.
+      responses:
+        '200':
+          description: The requested courier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Courier'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Courier:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        service_types:
+          type: array
+          items:
+            type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer access token obtained from POST /auth/oauth/token/, valid for 3600 seconds (60 minutes) per indexed integration guides. Passed as `Authorization: Bearer YOUR_ACCESS_TOKEN`.'

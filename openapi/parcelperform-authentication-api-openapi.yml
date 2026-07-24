@@ -1,0 +1,102 @@
+openapi: 3.0.3
+info:
+  title: Parcel Perform Analytics Authentication API
+  description: 'Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.
+
+
+    Endpoint groups marked CONFIRMED were verified against Parcel Perform''s public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform''s public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company''s marketing/product pages.'
+  version: 5.2.0
+  contact:
+    name: Parcel Perform
+    url: https://www.parcelperform.com
+  termsOfService: https://www.parcelperform.com/terms-of-service
+servers:
+- url: https://api.parcelperform.com/v5
+  description: Parcel Perform production API (v5)
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+  description: OAuth2 client-credentials token issuance. CONFIRMED path.
+paths:
+  /auth/oauth/token/:
+    post:
+      operationId: createAccessToken
+      tags:
+      - Authentication
+      summary: Generate a Bearer access token (CONFIRMED path)
+      description: 'Exchanges API credentials for a short-lived OAuth2 Bearer access token using the client-credentials grant. Send `Authorization: Basic base64(client_id:client_secret)` and `grant_type=client_credentials` in a form-encoded body. Confirmed via Parcel Perform''s public "Generate Bearer Access Token" documentation page and indexed third-party integration guides; the returned token is reported valid for 3600 seconds (60 minutes).'
+      security: []
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: Basic base64(client_id:client_secret).
+        schema:
+          type: string
+          example: Basic base64Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - grant_type
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                  - client_credentials
+      responses:
+        '200':
+          description: Bearer token issued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          enum:
+          - Bearer
+        expires_in:
+          type: integer
+          description: Token lifetime in seconds. Reported as 3600 (60 minutes).
+          example: 3600
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
+  responses:
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer access token obtained from POST /auth/oauth/token/, valid for 3600 seconds (60 minutes) per indexed integration guides. Passed as `Authorization: Bearer YOUR_ACCESS_TOKEN`.'

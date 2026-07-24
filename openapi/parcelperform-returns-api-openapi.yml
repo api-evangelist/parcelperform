@@ -1,0 +1,237 @@
+openapi: 3.0.3
+info:
+  title: Parcel Perform Analytics Returns API
+  description: 'Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.
+
+
+    Endpoint groups marked CONFIRMED were verified against Parcel Perform''s public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform''s public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company''s marketing/product pages.'
+  version: 5.2.0
+  contact:
+    name: Parcel Perform
+    url: https://www.parcelperform.com
+  termsOfService: https://www.parcelperform.com/terms-of-service
+servers:
+- url: https://api.parcelperform.com/v5
+  description: Parcel Perform production API (v5)
+security:
+- bearerAuth: []
+tags:
+- name: Returns
+  description: Create returns and return shipments. CONFIRMED operations; MODELED paths/schemas.
+paths:
+  /return:
+    post:
+      operationId: createReturn
+      tags:
+      - Returns
+      summary: Create a return (MODELED path; operation name CONFIRMED)
+      description: Creates a return in the Parcel Perform account against an existing outbound shipment. Only one return may be created per request. Confirmed via the "Create a Return" / "Create Return" documentation page titles; exact path and payload are modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReturnInput'
+      responses:
+        '201':
+          description: The created return.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Return'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /return/shipment:
+    post:
+      operationId: createReturnWithShipment
+      tags:
+      - Returns
+      summary: Create a return with its return shipment (MODELED path; operation name CONFIRMED)
+      description: Creates a Return and its associated Return Shipment together in a single request. Confirmed via the "Create a Return" documentation page title (which pairs Create Return with Create Shipment); exact path and payload are modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/ReturnInput'
+              - type: object
+                properties:
+                  shipment:
+                    $ref: '#/components/schemas/ShipmentInput'
+      responses:
+        '201':
+          description: The created return and return shipment.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  return:
+                    $ref: '#/components/schemas/Return'
+                  shipment:
+                    $ref: '#/components/schemas/Shipment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+components:
+  schemas:
+    ShipmentInput:
+      type: object
+      required:
+      - tracking_number
+      - courier
+      properties:
+        tracking_number:
+          type: string
+        courier:
+          type: string
+          description: Carrier/courier code (e.g. dhl, ups, fedex, ninjavan).
+        reference_number:
+          type: string
+          description: Merchant order/reference number.
+        sender:
+          $ref: '#/components/schemas/Party'
+        recipient:
+          $ref: '#/components/schemas/Party'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+        collection_point:
+          $ref: '#/components/schemas/CollectionPoint'
+        metadata:
+          type: object
+          additionalProperties: true
+    LineItem:
+      type: object
+      properties:
+        sku:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: integer
+        weight:
+          type: number
+    Shipment:
+      allOf:
+      - $ref: '#/components/schemas/ShipmentInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          status:
+            type: string
+            description: Normalized shipment status/milestone.
+            enum:
+            - info_received
+            - in_transit
+            - out_for_delivery
+            - delivered
+            - exception
+            - returned
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
+    ReturnInput:
+      type: object
+      required:
+      - shipment_tracking_number
+      properties:
+        shipment_tracking_number:
+          type: string
+          description: Tracking number of the outbound shipment being returned.
+        reason:
+          type: string
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
+    CollectionPoint:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+    Return:
+      allOf:
+      - $ref: '#/components/schemas/ReturnInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          status:
+            type: string
+            enum:
+            - requested
+            - approved
+            - in_transit
+            - received
+            - refunded
+            - rejected
+          created_at:
+            type: string
+            format: date-time
+    Party:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postal_code:
+          type: string
+        country:
+          type: string
+  responses:
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer access token obtained from POST /auth/oauth/token/, valid for 3600 seconds (60 minutes) per indexed integration guides. Passed as `Authorization: Bearer YOUR_ACCESS_TOKEN`.'

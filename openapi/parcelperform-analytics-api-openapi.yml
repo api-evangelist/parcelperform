@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: Parcel Perform Analytics API
+  description: 'Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.
+
+
+    Endpoint groups marked CONFIRMED were verified against Parcel Perform''s public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform''s public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company''s marketing/product pages.'
+  version: 5.2.0
+  contact:
+    name: Parcel Perform
+    url: https://www.parcelperform.com
+  termsOfService: https://www.parcelperform.com/terms-of-service
+servers:
+- url: https://api.parcelperform.com/v5
+  description: Parcel Perform production API (v5)
+security:
+- bearerAuth: []
+tags:
+- name: Analytics
+  description: Delivery-experience performance metrics behind the Analyze product. Entirely MODELED - no public reference page found.
+paths:
+  /analytics/performance:
+    get:
+      operationId: getPerformanceAnalytics
+      tags:
+      - Analytics
+      summary: Retrieve delivery-experience performance metrics (MODELED - not found in public reference)
+      description: Illustrative reporting endpoint modeled on the metrics described for Parcel Perform's "Analyze" product - carrier on-time/SLA performance, exception rates, and estimated-delivery-date accuracy aggregated over a date range. No standalone analytics endpoint is documented in the public API Guides & Reference as of this review; Analyze is presented as an in-app dashboard/AI-insights product. Entirely modeled.
+      parameters:
+      - name: date_from
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: date_to
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: courier
+        in: query
+        schema:
+          type: string
+      - name: group_by
+        in: query
+        schema:
+          type: string
+          enum:
+          - courier
+          - country
+          - service_level
+      responses:
+        '200':
+          description: Aggregated performance metrics.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceReport'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    PerformanceReport:
+      type: object
+      properties:
+        date_from:
+          type: string
+          format: date
+        date_to:
+          type: string
+          format: date
+        groups:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              shipment_count:
+                type: integer
+              on_time_rate:
+                type: number
+              exception_rate:
+                type: number
+              average_transit_days:
+                type: number
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
+  responses:
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer access token obtained from POST /auth/oauth/token/, valid for 3600 seconds (60 minutes) per indexed integration guides. Passed as `Authorization: Bearer YOUR_ACCESS_TOKEN`.'

@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: Parcel Perform Analytics Webhooks API
+  description: 'Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.
+
+
+    Endpoint groups marked CONFIRMED were verified against Parcel Perform''s public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform''s public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company''s marketing/product pages.'
+  version: 5.2.0
+  contact:
+    name: Parcel Perform
+    url: https://www.parcelperform.com
+  termsOfService: https://www.parcelperform.com/terms-of-service
+servers:
+- url: https://api.parcelperform.com/v5
+  description: Parcel Perform production API (v5)
+security:
+- bearerAuth: []
+tags:
+- name: Webhooks
+  description: Outgoing webhook subscriptions for tracking updates. CONFIRMED operations; MODELED paths/schemas.
+paths:
+  /webhook:
+    get:
+      operationId: listWebhookSubscriptions
+      tags:
+      - Webhooks
+      summary: List outgoing webhook subscriptions (MODELED)
+      description: Lists the callback URLs registered to receive outgoing Shipment Tracking Update webhooks. The existence of outgoing webhooks in v5.0.0 and v5.2.0 payload formats is confirmed via documentation page titles; a management endpoint for subscriptions is modeled, since webhook target URLs are commonly configured in the Parcel Perform console rather than (or in addition to) via API.
+      responses:
+        '200':
+          description: Registered webhook subscriptions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WebhookSubscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createWebhookSubscription
+      tags:
+      - Webhooks
+      summary: Create an outgoing webhook subscription (MODELED)
+      description: Registers a callback URL and payload format version (`5.0.0` or `5.2.0`) to receive outgoing Shipment Tracking Update events. Modeled endpoint - see summary on the GET operation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriptionInput'
+      responses:
+        '201':
+          description: The created webhook subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
+    WebhookSubscriptionInput:
+      type: object
+      required:
+      - target_url
+      - format_version
+      properties:
+        target_url:
+          type: string
+          format: uri
+        format_version:
+          type: string
+          enum:
+          - 5.0.0
+          - 5.2.0
+        secret:
+          type: string
+          description: Shared secret used to sign the webhook payload.
+    WebhookSubscription:
+      allOf:
+      - $ref: '#/components/schemas/WebhookSubscriptionInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          created_at:
+            type: string
+            format: date-time
+  responses:
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer access token obtained from POST /auth/oauth/token/, valid for 3600 seconds (60 minutes) per indexed integration guides. Passed as `Authorization: Bearer YOUR_ACCESS_TOKEN`.'

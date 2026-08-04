@@ -1,0 +1,26 @@
+{
+  "provider": "parcelperform",
+  "sources": [
+    "parcelperform-analytics-api-openapi.yml",
+    "parcelperform-authentication-api-openapi.yml",
+    "parcelperform-couriers-api-openapi.yml",
+    "parcelperform-returns-api-openapi.yml",
+    "parcelperform-shipments-api-openapi.yml",
+    "parcelperform-tracking-events-api-openapi.yml",
+    "parcelperform-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "parcelperform-analytics-api-openapi.yml",
+    "parcelperform-authentication-api-openapi.yml",
+    "parcelperform-couriers-api-openapi.yml",
+    "parcelperform-returns-api-openapi.yml",
+    "parcelperform-shipments-api-openapi.yml",
+    "parcelperform-tracking-events-api-openapi.yml",
+    "parcelperform-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

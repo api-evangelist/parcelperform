@@ -1,0 +1,363 @@
+{
+  "item": [
+    {
+      "id": "909bbc3e-6ff7-4685-9fd7-3bebc14007ef",
+      "name": "Webhooks",
+      "description": {
+        "content": "Outgoing webhook subscriptions for tracking updates. CONFIRMED operations; MODELED paths/schemas.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1a35948e-924d-4b0f-878c-a0f48db484ab",
+          "name": "List outgoing webhook subscriptions (MODELED)",
+          "request": {
+            "name": "List outgoing webhook subscriptions (MODELED)",
+            "description": {
+              "content": "Lists the callback URLs registered to receive outgoing Shipment Tracking Update webhooks. The existence of outgoing webhooks in v5.0.0 and v5.2.0 payload formats is confirmed via documentation page titles; a management endpoint for subscriptions is modeled, since webhook target URLs are commonly configured in the Parcel Perform console rather than (or in addition to) via API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e36f8174-328e-4bf8-b35e-0ee6916688f6",
+              "name": "Registered webhook subscriptions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"target_url\": \"http://BCTdFvWIPtjhV.vsmrS4yiXzjkawWWonTbjlqM1o88vh9lNZUbOeGbKRabRaT-3WAvYqIygl,tULmYxips\",\n      \"format_version\": \"5.2.0\",\n      \"secret\": \"string\",\n      \"id\": \"string\",\n      \"created_at\": \"1986-08-10T20:17:48.960Z\"\n    },\n    {\n      \"target_url\": \"https://cEDxK.cjdeHMdTLa6H36WLeFs+5u4nnj3cO+YYYZezDVWdkVrulA0FkAFrg9A8Yavr\",\n      \"format_version\": \"5.0.0\",\n      \"secret\": \"string\",\n      \"id\": \"string\",\n      \"created_at\": \"1963-05-07T15:20:00.974Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efc58103-0a1d-45c8-9007-f49bbf5685cf",
+              "name": "Missing, invalid, or expired Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7abf0533-2dea-45b1-973f-160df95e04f2",
+          "name": "Create an outgoing webhook subscription (MODELED)",
+          "request": {
+            "name": "Create an outgoing webhook subscription (MODELED)",
+            "description": {
+              "content": "Registers a callback URL and payload format version (`5.0.0` or `5.2.0`) to receive outgoing Shipment Tracking Update events. Modeled endpoint - see summary on the GET operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target_url\": \"<uri>\",\n  \"format_version\": \"<string>\",\n  \"secret\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "54a659be-22f9-40bd-9ea2-b99a5c5dac54",
+              "name": "The created webhook subscription.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_url\": \"<uri>\",\n  \"format_version\": \"<string>\",\n  \"secret\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"target_url\": \"<uri>\",\n  \"format_version\": \"<string>\",\n  \"secret\": \"<string>\",\n  \"id\": \"string\",\n  \"created_at\": \"1949-07-15T23:39:25.477Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd74bea7-cda2-41b3-8c4c-6a46540eb1f0",
+              "name": "Missing, invalid, or expired Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_url\": \"<uri>\",\n  \"format_version\": \"<string>\",\n  \"secret\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8456ef6d-c4b7-4118-91d8-1c630ca85e4d",
+              "name": "The request payload failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_url\": \"<uri>\",\n  \"format_version\": \"<string>\",\n  \"secret\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.parcelperform.com/v5",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "846dfb8c-fbe1-4d4e-bb78-523357034fcf",
+    "name": "Parcel Perform Analytics Webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.\n\nEndpoint groups marked CONFIRMED were verified against Parcel Perform's public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform's public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company's marketing/product pages.\n\nContact Support:\n Name: Parcel Perform",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,343 @@
+{
+  "item": [
+    {
+      "id": "11627eb3-c471-4ead-9966-95dd7e7bd726",
+      "name": "Tracking Events",
+      "description": {
+        "content": "Normalized carrier tracking event timeline. CONFIRMED operations; MODELED paths/schemas.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "43c29f3a-e394-4363-b60f-440c13c4074d",
+          "name": "Create events for an existing shipment (MODELED path; operation name CONFIRMED)",
+          "request": {
+            "name": "Create events for an existing shipment (MODELED path; operation name CONFIRMED)",
+            "description": {
+              "content": "Manually creates one or more tracking events on an existing outbound or return shipment, for cases such as in-house last-mile legs not covered by a carrier feed. Confirmed via the \"Create Events for an Existing Shipment\" and \"Create Events (v5.0)\" documentation page titles; exact path and payload are modeled on the documented event object (status, location, timestamp).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipment",
+                ":tracking_id",
+                "event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tracking_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "56369946-3473-4e38-86e6-b431ef7df33c",
+              "name": "The created events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipment",
+                    ":tracking_id",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tracking_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"id\": \"string\",\n      \"courier_raw_status\": \"string\"\n    },\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      \"id\": \"string\",\n      \"courier_raw_status\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c5df340-03ff-48e8-8ec3-3c51afe7cec5",
+              "name": "Missing, invalid, or expired Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipment",
+                    ":tracking_id",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tracking_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dbfa9c02-987c-48aa-9560-263c2717fdcc",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipment",
+                    ":tracking_id",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tracking_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c497d9e-2544-4981-9a9c-dfc820a52b5a",
+              "name": "The request payload failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipment",
+                    ":tracking_id",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tracking_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"status\": \"<string>\",\n      \"occurred_at\": \"<dateTime>\",\n      \"description\": \"<string>\",\n      \"location\": {\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.parcelperform.com/v5",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c02a1338-ae1e-48df-9346-f519a8668548",
+    "name": "Parcel Perform Analytics Tracking Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.\n\nEndpoint groups marked CONFIRMED were verified against Parcel Perform's public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform's public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company's marketing/product pages.\n\nContact Support:\n Name: Parcel Perform",
+      "type": "text/plain"
+    }
+  }
+}

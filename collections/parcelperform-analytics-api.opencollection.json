@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Parcel Perform Analytics API",
+    "version": "5.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve delivery-experience performance metrics (MODELED - not found in public reference)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/analytics/performance",
+            "params": [
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "courier",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "group_by",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Illustrative reporting endpoint modeled on the metrics described for Parcel Perform's \"Analyze\" product - carrier on-time/SLA performance, exception rates, and estimated-delivery-date accuracy aggregated over a date range. No standalone analytics endpoint is documented in the public API Guides & Reference as of this review; Analyze is presented as an in-app dashboard/AI-insights product. Entirely modeled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

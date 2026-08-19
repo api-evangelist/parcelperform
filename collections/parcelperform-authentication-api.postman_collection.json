@@ -1,0 +1,224 @@
+{
+  "item": [
+    {
+      "id": "e1eddd6f-10bb-4176-8f8f-079551ecbc91",
+      "name": "Authentication",
+      "description": {
+        "content": "OAuth2 client-credentials token issuance. CONFIRMED path.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a0554da3-2593-41be-8eed-f773fdc3f864",
+          "name": "Generate a Bearer access token (CONFIRMED path)",
+          "request": {
+            "name": "Generate a Bearer access token (CONFIRMED path)",
+            "description": {
+              "content": "Exchanges API credentials for a short-lived OAuth2 Bearer access token using the client-credentials grant. Send `Authorization: Basic base64(client_id:client_secret)` and `grant_type=client_credentials` in a form-encoded body. Confirmed via Parcel Perform's public \"Generate Bearer Access Token\" documentation page and indexed third-party integration guides; the returned token is reported valid for 3600 seconds (60 minutes).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "oauth",
+                "token",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "da90810a-fb41-4415-8e5d-c19a20be6746",
+              "name": "Bearer token issued.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "oauth",
+                    "token",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Basic base64(client_id:client_secret).",
+                    "key": "Authorization",
+                    "value": "Basic base64Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ="
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7add8f2-a530-4e3d-a220-3841e53c6968",
+              "name": "Missing, invalid, or expired Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "oauth",
+                    "token",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Basic base64(client_id:client_secret).",
+                    "key": "Authorization",
+                    "value": "Basic base64Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ="
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.parcelperform.com/v5",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6fcbf79e-311b-4b23-8588-d0ac06dc63ac",
+    "name": "Parcel Perform Analytics Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.\n\nEndpoint groups marked CONFIRMED were verified against Parcel Perform's public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform's public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company's marketing/product pages.\n\nContact Support:\n Name: Parcel Perform",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Parcel Perform Analytics Couriers API",
+    "version": "5.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Couriers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List supported couriers/carriers (MODELED - not found in public reference)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/courier"
+          },
+          "docs": "Illustrative list of the courier/carrier network Parcel Perform tracks against (reported between roughly 900 and 1,000+ carriers worldwide per Parcel Perform's marketing pages). No standalone `/courier` endpoint is documented in the public API Guides & Reference as of this review; carrier codes otherwise only appear as a field on Shipment resources. Entirely modeled."
+        },
+        {
+          "info": {
+            "name": "Retrieve a courier/carrier (MODELED - not found in public reference)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/courier/:courier_code",
+            "params": [
+              {
+                "name": "courier_code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Entirely modeled - see summary on the list operation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

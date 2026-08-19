@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Parcel Perform Analytics Returns API",
+    "version": "5.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Returns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a return (MODELED path; operation name CONFIRMED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/return",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a return in the Parcel Perform account against an existing outbound shipment. Only one return may be created per request. Confirmed via the \"Create a Return\" / \"Create Return\" documentation page titles; exact path and payload are modeled."
+        },
+        {
+          "info": {
+            "name": "Create a return with its return shipment (MODELED path; operation name CONFIRMED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/return/shipment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Return and its associated Return Shipment together in a single request. Confirmed via the \"Create a Return\" documentation page title (which pairs Create Return with Create Shipment); exact path and payload are modeled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Parcel Perform Analytics Authentication API",
+    "version": "5.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate a Bearer access token (CONFIRMED path)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/auth/oauth/token/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "grant_type",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Exchanges API credentials for a short-lived OAuth2 Bearer access token using the client-credentials grant. Send `Authorization: Basic base64(client_id:client_secret)` and `grant_type=client_credentials` in a form-encoded body. Confirmed via Parcel Perform's public \"Generate Bearer Access Token\" documentation page and indexed third-party integration guides; the returned token is reported valid for 3600 seconds (60 minutes)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Parcel Perform Analytics Shipments API",
+    "version": "5.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shipments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a shipment (MODELED path; operation name CONFIRMED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/shipment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a shipment in the Parcel Perform account so it can be tracked across the carrier network. Confirmed via the \"Create a Shipment\" documentation page title; exact path and payload fields are modeled on Parcel Perform's documented v5 shipment object."
+        },
+        {
+          "info": {
+            "name": "List shipments (MODELED path; operation name CONFIRMED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/shipment/list",
+            "params": [
+              {
+                "name": "tracking_number",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "courier",
+                "value": "",
+                "type": "query",
+                "description": "Carrier/courier code."
+              },
+              {
+                "name": "created_from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_to",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of shipments and their key details using search criteria such as tracking number, courier code, or creation date range. Confirmed via the \"List Shipments (v5.0)\" documentation page title; exact path, query parameters, and pagination are modeled."
+        },
+        {
+          "info": {
+            "name": "Retrieve shipment details (CONFIRMED path fragment)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/shipment/details/:tracking_id",
+            "params": [
+              {
+                "name": "tracking_id",
+                "value": "",
+                "type": "path",
+                "description": "Parcel Perform tracking ID or tracking number for the shipment."
+              }
+            ]
+          },
+          "docs": "Retrieves the user-input details plus the normalized tracking events for a single shipment. The `/v5/shipment/details/` path fragment is confirmed verbatim from indexed documentation; the trailing path parameter name is modeled. The v5.2.0 response additionally includes `returns`, `rating`, `line_items`, `collection_point`, and `event.location` objects versus v5.0.0, per the documented version diff."
+        },
+        {
+          "info": {
+            "name": "Update shipment (MODELED path; operation name CONFIRMED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.parcelperform.com/v5/shipment/details/:tracking_id",
+            "params": [
+              {
+                "name": "tracking_id",
+                "value": "",
+                "type": "path",
+                "description": "Parcel Perform tracking ID or tracking number for the shipment."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates certain fields, or adds additional elements, for an existing outbound or return shipment. Confirmed via the \"Update Shipment (v5.0)\" and \"Update Details for an Existing Shipment\" documentation page titles; exact path/verb and payload are modeled (Parcel Perform's docs list both PUT and POST variants by title, so PUT is used here as the primary verb)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

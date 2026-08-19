@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Parcel Perform Analytics Tracking Events API",
+    "version": "5.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tracking Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create events for an existing shipment (MODELED path; operation name CONFIRMED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/shipment/:tracking_id/event",
+            "params": [
+              {
+                "name": "tracking_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Manually creates one or more tracking events on an existing outbound or return shipment, for cases such as in-house last-mile legs not covered by a carrier feed. Confirmed via the \"Create Events for an Existing Shipment\" and \"Create Events (v5.0)\" documentation page titles; exact path and payload are modeled on the documented event object (status, location, timestamp)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

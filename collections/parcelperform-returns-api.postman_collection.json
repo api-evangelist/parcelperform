@@ -1,0 +1,447 @@
+{
+  "item": [
+    {
+      "id": "52758082-86ae-4778-9333-d7a36297411a",
+      "name": "Returns",
+      "description": {
+        "content": "Create returns and return shipments. CONFIRMED operations; MODELED paths/schemas.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "24d6f7be-aaf0-44aa-ab79-e6b7f2f2bdf2",
+          "name": "Create a return (MODELED path; operation name CONFIRMED)",
+          "request": {
+            "name": "Create a return (MODELED path; operation name CONFIRMED)",
+            "description": {
+              "content": "Creates a return in the Parcel Perform account against an existing outbound shipment. Only one return may be created per request. Confirmed via the \"Create a Return\" / \"Create Return\" documentation page titles; exact path and payload are modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "return"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shipment_tracking_number\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"line_items\": [\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "27a036c9-515e-46d1-9c40-806a9e324a21",
+              "name": "The created return.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipment_tracking_number\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"line_items\": [\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shipment_tracking_number\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"line_items\": [\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    }\n  ],\n  \"id\": \"string\",\n  \"status\": \"rejected\",\n  \"created_at\": \"1985-05-27T22:07:45.046Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4844d4c-225f-47d4-bf7c-917775553e27",
+              "name": "Missing, invalid, or expired Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipment_tracking_number\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"line_items\": [\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80fcbd5a-ae86-4eb3-9522-2a6391880001",
+              "name": "The request payload failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipment_tracking_number\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"line_items\": [\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a99c90e3-5053-41a5-b098-bfa4f3b22f32",
+          "name": "Create a return with its return shipment (MODELED path; operation name CONFIRMED)",
+          "request": {
+            "name": "Create a return with its return shipment (MODELED path; operation name CONFIRMED)",
+            "description": {
+              "content": "Creates a Return and its associated Return Shipment together in a single request. Confirmed via the \"Create a Return\" documentation page title (which pairs Create Return with Create Shipment); exact path and payload are modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "return",
+                "shipment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shipment_tracking_number\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"line_items\": [\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    }\n  ],\n  \"shipment\": {\n    \"tracking_number\": \"<string>\",\n    \"courier\": \"<string>\",\n    \"reference_number\": \"<string>\",\n    \"sender\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"recipient\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"line_items\": [\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      },\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      }\n    ],\n    \"collection_point\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"address\": \"<string>\"\n    },\n    \"metadata\": {\n      \"key_0\": \"string\",\n      \"key_1\": 7150\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "acf30401-1bb7-4ba6-9e52-0cb8c6b82693",
+              "name": "The created return and return shipment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return",
+                    "shipment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipment_tracking_number\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"line_items\": [\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    }\n  ],\n  \"shipment\": {\n    \"tracking_number\": \"<string>\",\n    \"courier\": \"<string>\",\n    \"reference_number\": \"<string>\",\n    \"sender\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"recipient\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"line_items\": [\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      },\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      }\n    ],\n    \"collection_point\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"address\": \"<string>\"\n    },\n    \"metadata\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"return\": {\n    \"shipment_tracking_number\": \"<string>\",\n    \"reason\": \"<string>\",\n    \"line_items\": [\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      },\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      }\n    ],\n    \"id\": \"string\",\n    \"status\": \"requested\",\n    \"created_at\": \"1978-05-19T23:56:55.316Z\"\n  },\n  \"shipment\": {\n    \"tracking_number\": \"<string>\",\n    \"courier\": \"<string>\",\n    \"reference_number\": \"<string>\",\n    \"sender\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"recipient\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"line_items\": [\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      },\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      }\n    ],\n    \"collection_point\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"address\": \"<string>\"\n    },\n    \"metadata\": {\n      \"key_0\": \"string\",\n      \"key_1\": 5149.591402050497,\n      \"key_2\": false\n    },\n    \"id\": \"string\",\n    \"status\": \"exception\",\n    \"created_at\": \"2014-09-28T03:10:49.053Z\",\n    \"updated_at\": \"2010-02-16T05:59:19.277Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3af5576a-2c73-41a0-b018-92df1d56f9ec",
+              "name": "Missing, invalid, or expired Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return",
+                    "shipment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipment_tracking_number\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"line_items\": [\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    }\n  ],\n  \"shipment\": {\n    \"tracking_number\": \"<string>\",\n    \"courier\": \"<string>\",\n    \"reference_number\": \"<string>\",\n    \"sender\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"recipient\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"line_items\": [\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      },\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      }\n    ],\n    \"collection_point\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"address\": \"<string>\"\n    },\n    \"metadata\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2e0710a-a7f0-4b51-ab8b-13ea012a63e0",
+              "name": "The request payload failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return",
+                    "shipment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shipment_tracking_number\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"line_items\": [\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"weight\": \"<number>\"\n    }\n  ],\n  \"shipment\": {\n    \"tracking_number\": \"<string>\",\n    \"courier\": \"<string>\",\n    \"reference_number\": \"<string>\",\n    \"sender\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"recipient\": {\n      \"name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"address\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"country\": \"<string>\"\n    },\n    \"line_items\": [\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      },\n      {\n        \"sku\": \"<string>\",\n        \"name\": \"<string>\",\n        \"quantity\": \"<integer>\",\n        \"weight\": \"<number>\"\n      }\n    ],\n    \"collection_point\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"address\": \"<string>\"\n    },\n    \"metadata\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.parcelperform.com/v5",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b9d87480-b3fb-4042-b0bf-2a32584021f9",
+    "name": "Parcel Perform Analytics Returns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.\n\nEndpoint groups marked CONFIRMED were verified against Parcel Perform's public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform's public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company's marketing/product pages.\n\nContact Support:\n Name: Parcel Perform",
+      "type": "text/plain"
+    }
+  }
+}

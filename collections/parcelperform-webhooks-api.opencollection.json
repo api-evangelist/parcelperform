@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Parcel Perform Analytics Webhooks API",
+    "version": "5.2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List outgoing webhook subscriptions (MODELED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.parcelperform.com/v5/webhook"
+          },
+          "docs": "Lists the callback URLs registered to receive outgoing Shipment Tracking Update webhooks. The existence of outgoing webhooks in v5.0.0 and v5.2.0 payload formats is confirmed via documentation page titles; a management endpoint for subscriptions is modeled, since webhook target URLs are commonly configured in the Parcel Perform console rather than (or in addition to) via API."
+        },
+        {
+          "info": {
+            "name": "Create an outgoing webhook subscription (MODELED)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.parcelperform.com/v5/webhook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a callback URL and payload format version (`5.0.0` or `5.2.0`) to receive outgoing Shipment Tracking Update events. Modeled endpoint - see summary on the GET operation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,362 @@
+{
+  "item": [
+    {
+      "id": "136e90a1-ad92-4719-a183-6a89e13cd3d1",
+      "name": "Couriers",
+      "description": {
+        "content": "Carrier/courier reference data. Entirely MODELED - no public reference page found.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "266139c0-e1d8-4e28-95dc-cad30b375922",
+          "name": "List supported couriers/carriers (MODELED - not found in public reference)",
+          "request": {
+            "name": "List supported couriers/carriers (MODELED - not found in public reference)",
+            "description": {
+              "content": "Illustrative list of the courier/carrier network Parcel Perform tracks against (reported between roughly 900 and 1,000+ carriers worldwide per Parcel Perform's marketing pages). No standalone `/courier` endpoint is documented in the public API Guides & Reference as of this review; carrier codes otherwise only appear as a field on Shipment resources. Entirely modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "courier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2726f871-aa23-4fb3-b1be-4ba7722cd665",
+              "name": "Supported couriers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "courier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"code\": \"string\",\n      \"name\": \"string\",\n      \"country\": \"string\",\n      \"service_types\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"code\": \"string\",\n      \"name\": \"string\",\n      \"country\": \"string\",\n      \"service_types\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "873c7535-93f4-490b-89aa-dc80ad684da8",
+              "name": "Missing, invalid, or expired Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "courier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e196edd0-053d-4cb0-acd3-fec0b4b52e95",
+          "name": "Retrieve a courier/carrier (MODELED - not found in public reference)",
+          "request": {
+            "name": "Retrieve a courier/carrier (MODELED - not found in public reference)",
+            "description": {
+              "content": "Entirely modeled - see summary on the list operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "courier",
+                ":courier_code"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "courier_code",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "130a87b8-f038-493c-b060-e19b4c16f797",
+              "name": "The requested courier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "courier",
+                    ":courier_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "courier_code",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"name\": \"string\",\n  \"country\": \"string\",\n  \"service_types\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9ca1082-ef29-4a4d-975f-5d8a62f11a56",
+              "name": "Missing, invalid, or expired Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "courier",
+                    ":courier_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "courier_code",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66ec3f4d-6d17-4602-8261-6613b163a0c2",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "courier",
+                    ":courier_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "courier_code",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.parcelperform.com/v5",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2bb9d259-0a14-4b30-bf8a-dbecd10a4ad9",
+    "name": "Parcel Perform Analytics Couriers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.\n\nEndpoint groups marked CONFIRMED were verified against Parcel Perform's public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform's public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company's marketing/product pages.\n\nContact Support:\n Name: Parcel Perform",
+      "type": "text/plain"
+    }
+  }
+}

@@ -251,6 +251,8 @@ apis:
     https://developers.parcelperform.com/docs/api-guides-reference/5unzr17vbxlxd-list-shipments
   baseURL: https://api.parcelperform.com/v5
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI

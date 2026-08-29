@@ -293,6 +293,9 @@ apis:
   - type: Documentation
     url: https://www.parcelperform.com/products/analyze
 common:
+- type: CapabilityMap
+  url: capabilities/parcelperform-capability-edges.yml
+  name: Parcel Perform Business Capability Map
 - type: AgenticAccess
   url: agentic-access/parcelperform-agentic-access.yml
 - type: VulnerabilityDisclosure

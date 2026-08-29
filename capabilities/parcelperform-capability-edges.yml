@@ -1,0 +1,45 @@
+slug: parcelperform
+provider: Parcel Perform
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Tracking Events
+  spec_file: parcelperform-tracking-events-api-openapi.yml
+  capability_id: BC-2510.10
+  capability_id_l1: BC-2510
+  capability_name: Event Capture and Status Management
+  confidence: 0.85
+  evidence: POST /shipment/{tracking_id}/event  createShipmentEvents  Create events for an existing shipment
+  reason: Ingests carrier/operational events against a shipment into a 'standardized event model' — canonical
+    event capture and status translation.
+- tag: Shipments
+  spec_file: parcelperform-shipments-api-openapi.yml
+  capability_id: BC-2510.20
+  capability_id_l1: BC-2510
+  capability_name: Shipment Tracking Management
+  confidence: 0.75
+  evidence: GET /shipment/details/{tracking_id}  getShipmentDetails (CONFIRMED path fragment); POST /shipment
+    createShipment; schemas ShipmentDetails, Event
+  reason: Shipments are registered and read by tracking_id with Event and ShipmentDetails payloads on
+    a platform that 'aggregates real-time tracking data across hundreds of carriers', so this is shipment
+    status resolution for visibility rather than transport execution.
+- tag: Returns
+  spec_file: parcelperform-returns-api-openapi.yml
+  capability_id: BC-2460.50
+  capability_id_l1: BC-2460
+  capability_name: Returns and Reverse Operations Management
+  confidence: 0.7
+  evidence: POST /return  createReturn; POST /return/shipment  createReturnWithShipment  Create a return
+    with its return shipment; schemas Return, CollectionPoint
+  reason: Creates returns and associated return shipments, i.e. initiation of reverse-logistics flows
+    including collection points.

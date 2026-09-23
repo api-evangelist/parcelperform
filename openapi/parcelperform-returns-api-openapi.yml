@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Parcel Perform Analytics Returns API
-  description: 'Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.
-
-
-    Endpoint groups marked CONFIRMED were verified against Parcel Perform''s public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform''s public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company''s marketing/product pages.'
+  title: Parcel Perform Returns API
+  description: Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top.
   version: 5.2.0
   contact:
     name: Parcel Perform
@@ -48,7 +45,7 @@ paths:
       operationId: createReturnWithShipment
       tags:
       - Returns
-      summary: Create a return with its return shipment (MODELED path; operation name CONFIRMED)
+      summary: Create a return with its return shipment (MODELED path; operation name…
       description: Creates a Return and its associated Return Shipment together in a single request. Confirmed via the "Create a Return" documentation page title (which pairs Create Return with Create Shipment); exact path and payload are modeled.
       requestBody:
         required: true
@@ -79,33 +76,20 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
-    ShipmentInput:
+    ReturnInput:
       type: object
       required:
-      - tracking_number
-      - courier
+      - shipment_tracking_number
       properties:
-        tracking_number:
+        shipment_tracking_number:
           type: string
-        courier:
+          description: Tracking number of the outbound shipment being returned.
+        reason:
           type: string
-          description: Carrier/courier code (e.g. dhl, ups, fedex, ninjavan).
-        reference_number:
-          type: string
-          description: Merchant order/reference number.
-        sender:
-          $ref: '#/components/schemas/Party'
-        recipient:
-          $ref: '#/components/schemas/Party'
         line_items:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
-        collection_point:
-          $ref: '#/components/schemas/CollectionPoint'
-        metadata:
-          type: object
-          additionalProperties: true
     LineItem:
       type: object
       properties:
@@ -140,20 +124,6 @@ components:
           updated_at:
             type: string
             format: date-time
-    ReturnInput:
-      type: object
-      required:
-      - shipment_tracking_number
-      properties:
-        shipment_tracking_number:
-          type: string
-          description: Tracking number of the outbound shipment being returned.
-        reason:
-          type: string
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
     Error:
       type: object
       properties:
@@ -170,15 +140,6 @@ components:
                 type: string
               field:
                 type: string
-    CollectionPoint:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        address:
-          type: string
     Return:
       allOf:
       - $ref: '#/components/schemas/ReturnInput'
@@ -198,6 +159,42 @@ components:
           created_at:
             type: string
             format: date-time
+    ShipmentInput:
+      type: object
+      required:
+      - tracking_number
+      - courier
+      properties:
+        tracking_number:
+          type: string
+        courier:
+          type: string
+          description: Carrier/courier code (e.g. dhl, ups, fedex, ninjavan).
+        reference_number:
+          type: string
+          description: Merchant order/reference number.
+        sender:
+          $ref: '#/components/schemas/Party'
+        recipient:
+          $ref: '#/components/schemas/Party'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+        collection_point:
+          $ref: '#/components/schemas/CollectionPoint'
+        metadata:
+          type: object
+          additionalProperties: true
+    CollectionPoint:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
     Party:
       type: object
       properties:

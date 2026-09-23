@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Parcel Perform Analytics Authentication API
-  description: 'Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top. All requests are authenticated with an OAuth2 client-credentials Bearer access token obtained from the auth endpoint below.
-
-
-    Endpoint groups marked CONFIRMED were verified against Parcel Perform''s public developer portal (developer.parcelperform.com, hosted on Stoplight at developers.parcelperform.com) via documentation page titles and indexed search snippets - the base domain `api.parcelperform.com`, the literal auth path `/auth/oauth/token/`, and the literal shipment-details path fragment `/v5/shipment/details/` were confirmed verbatim. The Stoplight portal renders its reference pages client-side, which blocked programmatic extraction of the remaining literal path strings and full request/response schemas, so most operation paths and all schemas below are MODELED - built from the confirmed operation names/versions (Create/Retrieve/List/Update Shipment, Create Events, Create Return, Outgoing Webhooks v5.0.0/v5.2.0, Response Structure & Errors) and standard Parcel Perform v5 REST conventions. The Couriers and Analytics groups are entirely modeled - Parcel Perform''s public API reference does not document a standalone endpoint set for either, so those paths are illustrative based on the company''s marketing/product pages.'
+  title: Parcel Perform Authentication API
+  description: Parcel Perform aggregates real-time tracking data across hundreds of carriers into one standardized event model, then layers shipment management, returns, outgoing webhooks, and delivery-experience analytics on top.
   version: 5.2.0
   contact:
     name: Parcel Perform
@@ -59,19 +56,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    TokenResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-        token_type:
-          type: string
-          enum:
-          - Bearer
-        expires_in:
-          type: integer
-          description: Token lifetime in seconds. Reported as 3600 (60 minutes).
-          example: 3600
     Error:
       type: object
       properties:
@@ -88,6 +72,19 @@ components:
                 type: string
               field:
                 type: string
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          enum:
+          - Bearer
+        expires_in:
+          type: integer
+          description: Token lifetime in seconds. Reported as 3600 (60 minutes).
+          example: 3600
   responses:
     Unauthorized:
       description: Missing, invalid, or expired Bearer token.

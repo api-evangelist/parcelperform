@@ -76,31 +76,6 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
-    ReturnInput:
-      type: object
-      required:
-      - shipment_tracking_number
-      properties:
-        shipment_tracking_number:
-          type: string
-          description: Tracking number of the outbound shipment being returned.
-        reason:
-          type: string
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-    LineItem:
-      type: object
-      properties:
-        sku:
-          type: string
-        name:
-          type: string
-        quantity:
-          type: integer
-        weight:
-          type: number
     Shipment:
       allOf:
       - $ref: '#/components/schemas/ShipmentInput'
@@ -124,22 +99,6 @@ components:
           updated_at:
             type: string
             format: date-time
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-              field:
-                type: string
     Return:
       allOf:
       - $ref: '#/components/schemas/ReturnInput'
@@ -159,6 +118,59 @@ components:
           created_at:
             type: string
             format: date-time
+    ReturnInput:
+      type: object
+      required:
+      - shipment_tracking_number
+      properties:
+        shipment_tracking_number:
+          type: string
+          description: Tracking number of the outbound shipment being returned.
+        reason:
+          type: string
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+    Party:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postal_code:
+          type: string
+        country:
+          type: string
+    LineItem:
+      type: object
+      properties:
+        sku:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: integer
+        weight:
+          type: number
+    CollectionPoint:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
     ShipmentInput:
       type: object
       required:
@@ -186,34 +198,22 @@ components:
         metadata:
           type: object
           additionalProperties: true
-    CollectionPoint:
+    Error:
       type: object
       properties:
-        id:
+        status:
           type: string
-        name:
-          type: string
-        address:
-          type: string
-    Party:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        address:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        postal_code:
-          type: string
-        country:
-          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
   responses:
     ValidationError:
       description: The request payload failed validation.

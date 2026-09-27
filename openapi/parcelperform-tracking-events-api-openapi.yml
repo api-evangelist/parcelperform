@@ -59,6 +59,25 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     EventInput:
       type: object
@@ -82,16 +101,6 @@ components:
               type: string
             country:
               type: string
-    Event:
-      allOf:
-      - $ref: '#/components/schemas/EventInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          courier_raw_status:
-            type: string
-            description: The original, non-normalized status text reported by the carrier.
     Error:
       type: object
       properties:
@@ -108,25 +117,16 @@ components:
                 type: string
               field:
                 type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, invalid, or expired Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Event:
+      allOf:
+      - $ref: '#/components/schemas/EventInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          courier_raw_status:
+            type: string
+            description: The original, non-normalized status text reported by the carrier.
   securitySchemes:
     bearerAuth:
       type: http

@@ -59,22 +59,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-              field:
-                type: string
     PerformanceReport:
       type: object
       properties:
@@ -99,6 +83,22 @@ components:
                 type: number
               average_transit_days:
                 type: number
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
   responses:
     Unauthorized:
       description: Missing, invalid, or expired Bearer token.

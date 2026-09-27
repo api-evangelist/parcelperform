@@ -145,100 +145,6 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
-    PageMeta:
-      type: object
-      properties:
-        page:
-          type: integer
-        page_size:
-          type: integer
-        total:
-          type: integer
-    EventInput:
-      type: object
-      required:
-      - status
-      - occurred_at
-      properties:
-        status:
-          type: string
-        description:
-          type: string
-        occurred_at:
-          type: string
-          format: date-time
-        location:
-          type: object
-          properties:
-            city:
-              type: string
-            state:
-              type: string
-            country:
-              type: string
-    ShipmentUpdateInput:
-      type: object
-      properties:
-        reference_number:
-          type: string
-        recipient:
-          $ref: '#/components/schemas/Party'
-        metadata:
-          type: object
-          additionalProperties: true
-    ReturnInput:
-      type: object
-      required:
-      - shipment_tracking_number
-      properties:
-        shipment_tracking_number:
-          type: string
-          description: Tracking number of the outbound shipment being returned.
-        reason:
-          type: string
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-    Event:
-      allOf:
-      - $ref: '#/components/schemas/EventInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          courier_raw_status:
-            type: string
-            description: The original, non-normalized status text reported by the carrier.
-    LineItem:
-      type: object
-      properties:
-        sku:
-          type: string
-        name:
-          type: string
-        quantity:
-          type: integer
-        weight:
-          type: number
-    ShipmentDetails:
-      allOf:
-      - $ref: '#/components/schemas/Shipment'
-      - type: object
-        properties:
-          events:
-            type: array
-            items:
-              $ref: '#/components/schemas/Event'
-          returns:
-            type: array
-            description: Present in v5.2.0 responses.
-            items:
-              $ref: '#/components/schemas/Return'
-          rating:
-            type: object
-            description: Present in v5.2.0 responses.
-            additionalProperties: true
     Shipment:
       allOf:
       - $ref: '#/components/schemas/ShipmentInput'
@@ -262,22 +168,33 @@ components:
           updated_at:
             type: string
             format: date-time
-    Error:
+    PageMeta:
       type: object
       properties:
-        status:
-          type: string
-        errors:
-          type: array
-          items:
+        page:
+          type: integer
+        page_size:
+          type: integer
+        total:
+          type: integer
+    ShipmentDetails:
+      allOf:
+      - $ref: '#/components/schemas/Shipment'
+      - type: object
+        properties:
+          events:
+            type: array
+            items:
+              $ref: '#/components/schemas/Event'
+          returns:
+            type: array
+            description: Present in v5.2.0 responses.
+            items:
+              $ref: '#/components/schemas/Return'
+          rating:
             type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-              field:
-                type: string
+            description: Present in v5.2.0 responses.
+            additionalProperties: true
     Return:
       allOf:
       - $ref: '#/components/schemas/ReturnInput'
@@ -297,6 +214,81 @@ components:
           created_at:
             type: string
             format: date-time
+    Party:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postal_code:
+          type: string
+        country:
+          type: string
+    LineItem:
+      type: object
+      properties:
+        sku:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: integer
+        weight:
+          type: number
+    ReturnInput:
+      type: object
+      required:
+      - shipment_tracking_number
+      properties:
+        shipment_tracking_number:
+          type: string
+          description: Tracking number of the outbound shipment being returned.
+        reason:
+          type: string
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+    EventInput:
+      type: object
+      required:
+      - status
+      - occurred_at
+      properties:
+        status:
+          type: string
+        description:
+          type: string
+        occurred_at:
+          type: string
+          format: date-time
+        location:
+          type: object
+          properties:
+            city:
+              type: string
+            state:
+              type: string
+            country:
+              type: string
+    CollectionPoint:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
     ShipmentInput:
       type: object
       required:
@@ -324,34 +316,42 @@ components:
         metadata:
           type: object
           additionalProperties: true
-    CollectionPoint:
+    Error:
       type: object
       properties:
-        id:
+        status:
           type: string
-        name:
-          type: string
-        address:
-          type: string
-    Party:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
+    ShipmentUpdateInput:
       type: object
       properties:
-        name:
+        reference_number:
           type: string
-        email:
-          type: string
-        phone:
-          type: string
-        address:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        postal_code:
-          type: string
-        country:
-          type: string
+        recipient:
+          $ref: '#/components/schemas/Party'
+        metadata:
+          type: object
+          additionalProperties: true
+    Event:
+      allOf:
+      - $ref: '#/components/schemas/EventInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          courier_raw_status:
+            type: string
+            description: The original, non-normalized status text reported by the carrier.
   responses:
     NotFound:
       description: The requested resource was not found.

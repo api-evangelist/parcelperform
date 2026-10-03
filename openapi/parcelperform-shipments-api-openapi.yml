@@ -145,75 +145,16 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
-    Shipment:
-      allOf:
-      - $ref: '#/components/schemas/ShipmentInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          status:
-            type: string
-            description: Normalized shipment status/milestone.
-            enum:
-            - info_received
-            - in_transit
-            - out_for_delivery
-            - delivered
-            - exception
-            - returned
-          created_at:
-            type: string
-            format: date-time
-          updated_at:
-            type: string
-            format: date-time
-    PageMeta:
+    ShipmentUpdateInput:
       type: object
       properties:
-        page:
-          type: integer
-        page_size:
-          type: integer
-        total:
-          type: integer
-    ShipmentDetails:
-      allOf:
-      - $ref: '#/components/schemas/Shipment'
-      - type: object
-        properties:
-          events:
-            type: array
-            items:
-              $ref: '#/components/schemas/Event'
-          returns:
-            type: array
-            description: Present in v5.2.0 responses.
-            items:
-              $ref: '#/components/schemas/Return'
-          rating:
-            type: object
-            description: Present in v5.2.0 responses.
-            additionalProperties: true
-    Return:
-      allOf:
-      - $ref: '#/components/schemas/ReturnInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          status:
-            type: string
-            enum:
-            - requested
-            - approved
-            - in_transit
-            - received
-            - refunded
-            - rejected
-          created_at:
-            type: string
-            format: date-time
+        reference_number:
+          type: string
+        recipient:
+          $ref: '#/components/schemas/Party'
+        metadata:
+          type: object
+          additionalProperties: true
     Party:
       type: object
       properties:
@@ -233,6 +174,49 @@ components:
           type: string
         country:
           type: string
+    CollectionPoint:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+    ShipmentDetails:
+      allOf:
+      - $ref: '#/components/schemas/Shipment'
+      - type: object
+        properties:
+          events:
+            type: array
+            items:
+              $ref: '#/components/schemas/Event'
+          returns:
+            type: array
+            description: Present in v5.2.0 responses.
+            items:
+              $ref: '#/components/schemas/Return'
+          rating:
+            type: object
+            description: Present in v5.2.0 responses.
+            additionalProperties: true
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
     LineItem:
       type: object
       properties:
@@ -244,6 +228,25 @@ components:
           type: integer
         weight:
           type: number
+    Return:
+      allOf:
+      - $ref: '#/components/schemas/ReturnInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          status:
+            type: string
+            enum:
+            - requested
+            - approved
+            - in_transit
+            - received
+            - refunded
+            - rejected
+          created_at:
+            type: string
+            format: date-time
     ReturnInput:
       type: object
       required:
@@ -258,6 +261,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
+    PageMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+        page_size:
+          type: integer
+        total:
+          type: integer
     EventInput:
       type: object
       required:
@@ -280,15 +292,6 @@ components:
               type: string
             country:
               type: string
-    CollectionPoint:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        address:
-          type: string
     ShipmentInput:
       type: object
       required:
@@ -316,32 +319,6 @@ components:
         metadata:
           type: object
           additionalProperties: true
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-              field:
-                type: string
-    ShipmentUpdateInput:
-      type: object
-      properties:
-        reference_number:
-          type: string
-        recipient:
-          $ref: '#/components/schemas/Party'
-        metadata:
-          type: object
-          additionalProperties: true
     Event:
       allOf:
       - $ref: '#/components/schemas/EventInput'
@@ -352,9 +329,32 @@ components:
           courier_raw_status:
             type: string
             description: The original, non-normalized status text reported by the carrier.
+    Shipment:
+      allOf:
+      - $ref: '#/components/schemas/ShipmentInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          status:
+            type: string
+            description: Normalized shipment status/milestone.
+            enum:
+            - info_received
+            - in_transit
+            - out_for_delivery
+            - delivered
+            - exception
+            - returned
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
       content:
         application/json:
           schema:
@@ -365,8 +365,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, invalid, or expired Bearer token.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:

@@ -60,8 +60,8 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
       content:
         application/json:
           schema:
@@ -72,13 +72,29 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, invalid, or expired Bearer token.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
     EventInput:
       type: object
       required:
@@ -101,22 +117,6 @@ components:
               type: string
             country:
               type: string
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-              field:
-                type: string
     Event:
       allOf:
       - $ref: '#/components/schemas/EventInput'

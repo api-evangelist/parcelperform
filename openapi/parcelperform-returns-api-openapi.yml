@@ -76,62 +76,6 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
-    Shipment:
-      allOf:
-      - $ref: '#/components/schemas/ShipmentInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          status:
-            type: string
-            description: Normalized shipment status/milestone.
-            enum:
-            - info_received
-            - in_transit
-            - out_for_delivery
-            - delivered
-            - exception
-            - returned
-          created_at:
-            type: string
-            format: date-time
-          updated_at:
-            type: string
-            format: date-time
-    Return:
-      allOf:
-      - $ref: '#/components/schemas/ReturnInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          status:
-            type: string
-            enum:
-            - requested
-            - approved
-            - in_transit
-            - received
-            - refunded
-            - rejected
-          created_at:
-            type: string
-            format: date-time
-    ReturnInput:
-      type: object
-      required:
-      - shipment_tracking_number
-      properties:
-        shipment_tracking_number:
-          type: string
-          description: Tracking number of the outbound shipment being returned.
-        reason:
-          type: string
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
     Party:
       type: object
       properties:
@@ -151,6 +95,31 @@ components:
           type: string
         country:
           type: string
+    CollectionPoint:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
     LineItem:
       type: object
       properties:
@@ -162,15 +131,39 @@ components:
           type: integer
         weight:
           type: number
-    CollectionPoint:
+    ReturnInput:
       type: object
+      required:
+      - shipment_tracking_number
       properties:
-        id:
+        shipment_tracking_number:
           type: string
-        name:
+          description: Tracking number of the outbound shipment being returned.
+        reason:
           type: string
-        address:
-          type: string
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+    Return:
+      allOf:
+      - $ref: '#/components/schemas/ReturnInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          status:
+            type: string
+            enum:
+            - requested
+            - approved
+            - in_transit
+            - received
+            - refunded
+            - rejected
+          created_at:
+            type: string
+            format: date-time
     ShipmentInput:
       type: object
       required:
@@ -198,31 +191,38 @@ components:
         metadata:
           type: object
           additionalProperties: true
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-              field:
-                type: string
+    Shipment:
+      allOf:
+      - $ref: '#/components/schemas/ShipmentInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          status:
+            type: string
+            description: Normalized shipment status/milestone.
+            enum:
+            - info_received
+            - in_transit
+            - out_for_delivery
+            - delivered
+            - exception
+            - returned
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
   responses:
-    ValidationError:
-      description: The request payload failed validation.
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, invalid, or expired Bearer token.
+    ValidationError:
+      description: The request payload failed validation.
       content:
         application/json:
           schema:

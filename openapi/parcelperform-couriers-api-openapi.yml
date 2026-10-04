@@ -76,19 +76,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    Courier:
-      type: object
-      properties:
-        code:
-          type: string
-        name:
-          type: string
-        country:
-          type: string
-        service_types:
-          type: array
-          items:
-            type: string
     Error:
       type: object
       properties:
@@ -105,6 +92,19 @@ components:
                 type: string
               field:
                 type: string
+    Courier:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        service_types:
+          type: array
+          items:
+            type: string
   securitySchemes:
     bearerAuth:
       type: http

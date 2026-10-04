@@ -75,6 +75,19 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
+  responses:
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Party:
       type: object
@@ -95,31 +108,6 @@ components:
           type: string
         country:
           type: string
-    CollectionPoint:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        address:
-          type: string
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-              field:
-                type: string
     LineItem:
       type: object
       properties:
@@ -131,6 +119,65 @@ components:
           type: integer
         weight:
           type: number
+    ShipmentInput:
+      type: object
+      required:
+      - tracking_number
+      - courier
+      properties:
+        tracking_number:
+          type: string
+        courier:
+          type: string
+          description: Carrier/courier code (e.g. dhl, ups, fedex, ninjavan).
+        reference_number:
+          type: string
+          description: Merchant order/reference number.
+        sender:
+          $ref: '#/components/schemas/Party'
+        recipient:
+          $ref: '#/components/schemas/Party'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+        collection_point:
+          $ref: '#/components/schemas/CollectionPoint'
+        metadata:
+          type: object
+          additionalProperties: true
+    CollectionPoint:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+    Shipment:
+      allOf:
+      - $ref: '#/components/schemas/ShipmentInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          status:
+            type: string
+            description: Normalized shipment status/milestone.
+            enum:
+            - info_received
+            - in_transit
+            - out_for_delivery
+            - delivered
+            - exception
+            - returned
+          created_at:
+            type: string
+            format: date-time
+          updated_at:
+            type: string
+            format: date-time
     ReturnInput:
       type: object
       required:
@@ -164,69 +211,22 @@ components:
           created_at:
             type: string
             format: date-time
-    ShipmentInput:
+    Error:
       type: object
-      required:
-      - tracking_number
-      - courier
       properties:
-        tracking_number:
+        status:
           type: string
-        courier:
-          type: string
-          description: Carrier/courier code (e.g. dhl, ups, fedex, ninjavan).
-        reference_number:
-          type: string
-          description: Merchant order/reference number.
-        sender:
-          $ref: '#/components/schemas/Party'
-        recipient:
-          $ref: '#/components/schemas/Party'
-        line_items:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/LineItem'
-        collection_point:
-          $ref: '#/components/schemas/CollectionPoint'
-        metadata:
-          type: object
-          additionalProperties: true
-    Shipment:
-      allOf:
-      - $ref: '#/components/schemas/ShipmentInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          status:
-            type: string
-            description: Normalized shipment status/milestone.
-            enum:
-            - info_received
-            - in_transit
-            - out_for_delivery
-            - delivered
-            - exception
-            - returned
-          created_at:
-            type: string
-            format: date-time
-          updated_at:
-            type: string
-            format: date-time
-  responses:
-    Unauthorized:
-      description: Missing, invalid, or expired Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
   securitySchemes:
     bearerAuth:
       type: http

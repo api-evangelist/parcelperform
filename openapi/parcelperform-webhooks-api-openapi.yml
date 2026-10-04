@@ -79,16 +79,6 @@ components:
         secret:
           type: string
           description: Shared secret used to sign the webhook payload.
-    WebhookSubscription:
-      allOf:
-      - $ref: '#/components/schemas/WebhookSubscriptionInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          created_at:
-            type: string
-            format: date-time
     Error:
       type: object
       properties:
@@ -105,6 +95,16 @@ components:
                 type: string
               field:
                 type: string
+    WebhookSubscription:
+      allOf:
+      - $ref: '#/components/schemas/WebhookSubscriptionInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          created_at:
+            type: string
+            format: date-time
   responses:
     Unauthorized:
       description: Missing, invalid, or expired Bearer token.

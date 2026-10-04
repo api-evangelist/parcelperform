@@ -59,42 +59,17 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
-  responses:
-    Unauthorized:
-      description: Missing, invalid, or expired Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-              field:
-                type: string
+    Event:
+      allOf:
+      - $ref: '#/components/schemas/EventInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          courier_raw_status:
+            type: string
+            description: The original, non-normalized status text reported by the carrier.
     EventInput:
       type: object
       required:
@@ -117,16 +92,41 @@ components:
               type: string
             country:
               type: string
-    Event:
-      allOf:
-      - $ref: '#/components/schemas/EventInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          courier_raw_status:
-            type: string
-            description: The original, non-normalized status text reported by the carrier.
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
+  responses:
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

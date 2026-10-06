@@ -46,7 +46,7 @@ tags:
 - Returns
 - E-Commerce
 created: '2026-07-03'
-modified: '2026-07-03'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: parcelperform:parcelperform-analytics-api
@@ -294,6 +294,8 @@ apis:
   - type: Documentation
     url: https://www.parcelperform.com/products/analyze
 common:
+- url: https://www.perform.ai/insights
+  type: Blog
 - type: CapabilityMap
   url: capabilities/parcelperform-capability-edges.yml
   name: Parcel Perform Business Capability Map

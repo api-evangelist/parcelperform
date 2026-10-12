@@ -1,0 +1,18 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/parcelperform/integrations
+- https://zapier.com/apps/parcel-perform/integrations
+- https://n8n.io/integrations/parcelperform/
+- https://composio.dev/toolkits/parcelperform
+- https://monid.ai/tools/parcelperform
+checked:
+- https://composio.dev/toolkits/parcelperform
+- https://monid.ai/tools/parcelperform
+- https://n8n.io/integrations/parcelperform/
+- https://zapier.com/apps/parcel-perform/integrations
+- https://zapier.com/apps/parcelperform/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []

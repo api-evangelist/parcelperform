@@ -61,24 +61,20 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
+  responses:
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    WebhookSubscriptionInput:
-      type: object
-      required:
-      - target_url
-      - format_version
-      properties:
-        target_url:
-          type: string
-          format: uri
-        format_version:
-          type: string
-          enum:
-          - 5.0.0
-          - 5.2.0
-        secret:
-          type: string
-          description: Shared secret used to sign the webhook payload.
     Error:
       type: object
       properties:
@@ -105,19 +101,23 @@ components:
           created_at:
             type: string
             format: date-time
-  responses:
-    Unauthorized:
-      description: Missing, invalid, or expired Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    WebhookSubscriptionInput:
+      type: object
+      required:
+      - target_url
+      - format_version
+      properties:
+        target_url:
+          type: string
+          format: uri
+        format_version:
+          type: string
+          enum:
+          - 5.0.0
+          - 5.2.0
+        secret:
+          type: string
+          description: Shared secret used to sign the webhook payload.
   securitySchemes:
     bearerAuth:
       type: http

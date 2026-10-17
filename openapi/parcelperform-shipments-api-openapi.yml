@@ -145,98 +145,6 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
-    Event:
-      allOf:
-      - $ref: '#/components/schemas/EventInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          courier_raw_status:
-            type: string
-            description: The original, non-normalized status text reported by the carrier.
-    ShipmentDetails:
-      allOf:
-      - $ref: '#/components/schemas/Shipment'
-      - type: object
-        properties:
-          events:
-            type: array
-            items:
-              $ref: '#/components/schemas/Event'
-          returns:
-            type: array
-            description: Present in v5.2.0 responses.
-            items:
-              $ref: '#/components/schemas/Return'
-          rating:
-            type: object
-            description: Present in v5.2.0 responses.
-            additionalProperties: true
-    PageMeta:
-      type: object
-      properties:
-        page:
-          type: integer
-        page_size:
-          type: integer
-        total:
-          type: integer
-    Party:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        address:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        postal_code:
-          type: string
-        country:
-          type: string
-    CollectionPoint:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        address:
-          type: string
-    ShipmentInput:
-      type: object
-      required:
-      - tracking_number
-      - courier
-      properties:
-        tracking_number:
-          type: string
-        courier:
-          type: string
-          description: Carrier/courier code (e.g. dhl, ups, fedex, ninjavan).
-        reference_number:
-          type: string
-          description: Merchant order/reference number.
-        sender:
-          $ref: '#/components/schemas/Party'
-        recipient:
-          $ref: '#/components/schemas/Party'
-        line_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-        collection_point:
-          $ref: '#/components/schemas/CollectionPoint'
-        metadata:
-          type: object
-          additionalProperties: true
     LineItem:
       type: object
       properties:
@@ -248,16 +156,6 @@ components:
           type: integer
         weight:
           type: number
-    ShipmentUpdateInput:
-      type: object
-      properties:
-        reference_number:
-          type: string
-        recipient:
-          $ref: '#/components/schemas/Party'
-        metadata:
-          type: object
-          additionalProperties: true
     Shipment:
       allOf:
       - $ref: '#/components/schemas/ShipmentInput'
@@ -295,6 +193,87 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
+    ShipmentDetails:
+      allOf:
+      - $ref: '#/components/schemas/Shipment'
+      - type: object
+        properties:
+          events:
+            type: array
+            items:
+              $ref: '#/components/schemas/Event'
+          returns:
+            type: array
+            description: Present in v5.2.0 responses.
+            items:
+              $ref: '#/components/schemas/Return'
+          rating:
+            type: object
+            description: Present in v5.2.0 responses.
+            additionalProperties: true
+    Party:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postal_code:
+          type: string
+        country:
+          type: string
+    Event:
+      allOf:
+      - $ref: '#/components/schemas/EventInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          courier_raw_status:
+            type: string
+            description: The original, non-normalized status text reported by the carrier.
+    PageMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+        page_size:
+          type: integer
+        total:
+          type: integer
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              field:
+                type: string
+    CollectionPoint:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
     Return:
       allOf:
       - $ref: '#/components/schemas/ReturnInput'
@@ -314,6 +293,43 @@ components:
           created_at:
             type: string
             format: date-time
+    ShipmentUpdateInput:
+      type: object
+      properties:
+        reference_number:
+          type: string
+        recipient:
+          $ref: '#/components/schemas/Party'
+        metadata:
+          type: object
+          additionalProperties: true
+    ShipmentInput:
+      type: object
+      required:
+      - tracking_number
+      - courier
+      properties:
+        tracking_number:
+          type: string
+        courier:
+          type: string
+          description: Carrier/courier code (e.g. dhl, ups, fedex, ninjavan).
+        reference_number:
+          type: string
+          description: Merchant order/reference number.
+        sender:
+          $ref: '#/components/schemas/Party'
+        recipient:
+          $ref: '#/components/schemas/Party'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+        collection_point:
+          $ref: '#/components/schemas/CollectionPoint'
+        metadata:
+          type: object
+          additionalProperties: true
     EventInput:
       type: object
       required:
@@ -336,25 +352,9 @@ components:
               type: string
             country:
               type: string
-    Error:
-      type: object
-      properties:
-        status:
-          type: string
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              message:
-                type: string
-              field:
-                type: string
   responses:
-    Unauthorized:
-      description: Missing, invalid, or expired Bearer token.
+    ValidationError:
+      description: The request payload failed validation.
       content:
         application/json:
           schema:
@@ -365,8 +365,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
+    Unauthorized:
+      description: Missing, invalid, or expired Bearer token.
       content:
         application/json:
           schema:

@@ -1,4 +1,4 @@
-# Parcel Perform (parcelperform)
+# Parcel Perform
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,158 +66,129 @@
 
 Parcel Perform is a Singapore-headquartered Data & Delivery Experience Platform that aggregates real-time tracking data across hundreds of carriers worldwide into one standardized event model, then layers post-purchase tracking pages, proactive notifications, logistics performance analytics, and returns management on top. The Parcel Perform API (developer portal at developer.parcelperform.com) lets merchants and platforms create and retrieve shipments and their tracking events, manage returns, and receive outgoing webhooks for tracking-status changes, authenticated with OAuth2 client-credentials bearer tokens.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/parcelperform/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/parcelperform/refs/heads/main/apis.yml)
+**Areas:** Logistics · Shipment Tracking · Post-Purchase · Delivery Experience · Returns · E-Commerce
 
-## Tags
+## Parcel Perform on APIs.io
 
-- Logistics
-- Shipment Tracking
-- Post-Purchase
-- Delivery Experience
-- Returns
-- E-Commerce
+Everything profiled for Parcel Perform is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/parcelperform/](https://apis.io/providers/parcelperform/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (7)
 
-- **Created:** 2026-07-03
-- **Modified:** 2026-07-03
+- [Parcel Perform Analytics API](https://apis.io/apis/parcelperform/parcelperform-analytics-api/) — Delivery-experience performance metrics behind the Analyze product. Entirely MODELED - no public reference page found.
+- [Parcel Perform Authentication API](https://apis.io/apis/parcelperform/parcelperform-authentication-api/) — OAuth2 client-credentials token issuance. CONFIRMED path.
+- [Parcel Perform Couriers API](https://apis.io/apis/parcelperform/parcelperform-couriers-api/) — Carrier/courier reference data. Entirely MODELED - no public reference page found.
+- [Parcel Perform Returns API](https://apis.io/apis/parcelperform/parcelperform-returns-api/) — Create returns and return shipments. CONFIRMED operations; MODELED paths/schemas.
+- [Parcel Perform Shipments API](https://apis.io/apis/parcelperform/parcelperform-shipments-api/) — Create, retrieve, list, and update shipments. CONFIRMED operations; MODELED paths/schemas.
+- [Parcel Perform Tracking Events API](https://apis.io/apis/parcelperform/parcelperform-tracking-events-api/) — Normalized carrier tracking event timeline. CONFIRMED operations; MODELED paths/schemas.
+- [Parcel Perform Webhooks API](https://apis.io/apis/parcelperform/parcelperform-webhooks-api/) — Outgoing webhook subscriptions for tracking updates. CONFIRMED operations; MODELED paths/schemas.
 
-## APIs
+### Published properties
 
-### Parcel Perform Shipments API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Create, retrieve, list, and update shipments in a Parcel Perform account. A shipment carries the carrier/courier code, tracking number, sender and recipient details, and (in the v5.2.0 response) related returns, rating, line item, and collection point objects. This is the system of record that ties a merchant order to a trackable parcel across Parcel Perform's carrier network.
+#### Agentic access (1)
 
-- **Human URL:** [https://developers.parcelperform.com/docs/api-guides-reference/5unzr17vbxlxd-list-shipments](https://developers.parcelperform.com/docs/api-guides-reference/5unzr17vbxlxd-list-shipments)
-- **Base URL:** `https://api.parcelperform.com/v5`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Parcelperform Agentic Access](https://apis.io/agentic-access/parcelperform/parcelperform-agentic-access/)
 
-- Shipments
-- Tracking
-- Carriers
+#### Collections (8)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://developers.parcelperform.com/docs/api-guides-reference/8e768e6831f6c-overview)
-- [API Reference](https://developers.parcelperform.com/docs/api-guides-reference/6f5f7fedef593-create-a-shipment)
-- [OpenAPI](openapi/parcelperform-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/parcelperform.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/parcelperform.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Parcel Perform API](https://apis.io/collections/parcelperform/open-parcelperform/)
+- [Parcel Perform Analytics API](https://apis.io/collections/parcelperform/open-parcelperform-analytics-api/)
+- [Parcel Perform Analytics Authentication API](https://apis.io/collections/parcelperform/open-parcelperform-authentication-api/)
+- [Parcel Perform Analytics Couriers API](https://apis.io/collections/parcelperform/open-parcelperform-couriers-api/)
+- [Parcel Perform Analytics Returns API](https://apis.io/collections/parcelperform/open-parcelperform-returns-api/)
+- [Parcel Perform Analytics Shipments API](https://apis.io/collections/parcelperform/open-parcelperform-shipments-api/)
+- [Parcel Perform Analytics Tracking Events API](https://apis.io/collections/parcelperform/open-parcelperform-tracking-events-api/)
+- [Parcel Perform Analytics Webhooks API](https://apis.io/collections/parcelperform/open-parcelperform-webhooks-api/)
 
-### Parcel Perform Tracking Events API
+#### Security (3)
 
-Retrieve the normalized tracking event timeline captured for a shipment, or manually create events on an existing outbound or return shipment. Parcel Perform standardizes carrier-specific status codes from its carrier network into a single event and milestone model (with location and timestamp) so consuming applications don't have to parse each carrier's raw tracking feed themselves.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://developers.parcelperform.com/docs/api-guides-reference/ee4c914fc83bf-create-events-for-an-existing-shipment](https://developers.parcelperform.com/docs/api-guides-reference/ee4c914fc83bf-create-events-for-an-existing-shipment)
-- **Base URL:** `https://api.parcelperform.com/v5`
+- [Parcelperform Authentication](https://apis.io/security/parcelperform/parcelperform-authentication/)
+- [Parcelperform Domain Security](https://apis.io/security/parcelperform/parcelperform-domain-security/)
+- [Parcelperform Vulnerability Disclosure](https://apis.io/security/parcelperform/parcelperform-vulnerability-disclosure/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Tracking
-- Events
-- Milestones
+Published plans, tiers and prices.
 
-#### Properties
+- [Parcelperform Plans Pricing](https://apis.io/plans/parcelperform/parcelperform-plans-pricing/)
 
-- [Documentation](https://www.parcelperform.com/insights/tracking-api)
-- [API Reference](https://developers.parcelperform.com/docs/api-guides-reference/blfc895yi4bx3-create-events)
-- [OpenAPI](openapi/parcelperform-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/parcelperform.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/parcelperform.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Parcel Perform Returns API
+Published request limits.
 
-Create a return, or create a return together with its associated return shipment, in a Parcel Perform account (one return per request). Return shipments flow through the same shipment and tracking-event model as outbound parcels, giving merchants a single system for forward and reverse logistics visibility.
+- [Parcelperform Rate Limits](https://apis.io/rate-limits/parcelperform/parcelperform-rate-limits/)
 
-- **Human URL:** [https://developers.parcelperform.com/docs/api-guides-reference/3d66ap56pfly7-create-return](https://developers.parcelperform.com/docs/api-guides-reference/3d66ap56pfly7-create-return)
-- **Base URL:** `https://api.parcelperform.com/v5`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Returns
-- Reverse Logistics
-- RMA
+- [Parcelperform Finops](https://apis.io/finops/parcelperform/parcelperform-finops/)
 
-#### Properties
+## Where to find this API
 
-- [API Reference](https://developers.parcelperform.com/docs/api-guides-reference/1bd1a948e1eb3-create-a-return)
-- [OpenAPI](openapi/parcelperform-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/parcelperform.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/parcelperform.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Parcel Perform Webhooks API
-
-Register a callback URL to automatically receive Shipment Tracking Update events as outgoing webhooks whenever Parcel Perform ingests a new carrier tracking event, in either the v5.0.0 or v5.2.0 payload format. This is Parcel Perform's push notification surface - there is no public WebSocket or streaming endpoint.
-
-- **Human URL:** [https://developers.parcelperform.com/docs/api-guides-reference/e8adbc8a2da19-outgoing-webhooks-version-5-format](https://developers.parcelperform.com/docs/api-guides-reference/e8adbc8a2da19-outgoing-webhooks-version-5-format)
-- **Base URL:** `https://api.parcelperform.com/v5`
-
-#### Tags
-
-- Webhooks
-- Notifications
-- Outgoing Webhooks
-
-#### Properties
-
-- [Documentation](https://developers.parcelperform.com/docs/api-guides-reference/ba66787fe87e7-outgoing-webhooks-version-5-2-0-format)
-- [API Reference](https://developers.parcelperform.com/docs/api-guides-reference/e8adbc8a2da19-outgoing-webhooks-version-5-format)
-- [OpenAPI](openapi/parcelperform-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/parcelperform.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/parcelperform.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Parcel Perform Couriers API
-
-Modeled reference-data surface for the carrier/courier network Parcel Perform aggregates - reported between roughly 900 and 1,000+ carriers worldwide, added weekly, each identified by a courier code used on shipment creation. Parcel Perform publishes a marketing directory of supported carriers, but the public API Guides & Reference does not document a standalone GET /couriers list endpoint as of this review; carrier codes are otherwise surfaced only as a field on Shipment resources, so the endpoints below are modeled rather than confirmed.
-
-- **Human URL:** [https://www.parcelperform.com/integrations/carriers](https://www.parcelperform.com/integrations/carriers)
-- **Base URL:** `https://api.parcelperform.com/v5`
-
-#### Tags
-
-- Couriers
-- Carriers
-- Reference Data
-
-#### Properties
-
-- [Documentation](https://www.parcelperform.com/integrations/carriers)
-- [OpenAPI](openapi/parcelperform-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/parcelperform.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/parcelperform.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Parcel Perform Analytics API
-
-Modeled reporting surface behind Parcel Perform's Analyze product, which turns aggregated delivery-experience data (carrier SLA/on-time performance, exception rates, estimated-delivery-date accuracy) into dashboards and AI-generated insights. Analyze is documented as a product within the Parcel Perform app, not as a standalone endpoint set in the public API Guides & Reference, so the endpoints below are modeled on the metrics the product describes rather than confirmed against a published reference.
-
-- **Human URL:** [https://www.parcelperform.com/products/analyze](https://www.parcelperform.com/products/analyze)
-- **Base URL:** `https://api.parcelperform.com/v5`
-
-#### Tags
-
-- Analytics
-- Insights
-- Performance
-
-#### Properties
-
-- [Documentation](https://www.parcelperform.com/products/analyze)
-- [OpenAPI](openapi/parcelperform-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/parcelperform.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/parcelperform.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/ParcelPerform)
-- [LinkedIn](https://www.linkedin.com/company/parcel-perform)
 - [Website](https://www.parcelperform.com/)
 - [Documentation](https://developers.parcelperform.com/)
-- [Plans](plans/parcelperform-plans-pricing.yml)
-- [Rate Limits](rate-limits/parcelperform-rate-limits.yml)
-- [Fin Ops](finops/parcelperform-finops.yml)
+- [Blog](https://www.perform.ai/insights)
+- [GitHub](https://github.com/ParcelPerform)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 27.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 50.7 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 5.3 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 17.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/parcelperform/](https://apis.io/providers/parcelperform/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Parcel Perform: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/parcelperform/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
